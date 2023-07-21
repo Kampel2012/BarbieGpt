@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import key from '../../../key';
+
+// TODO 1) вынести функционал запроса в API отдельно
+// TODO 2) попробовать авторизовать пользователя через google id и сохранить полученный id в localStorage
+// TODO 3) если получилось, то попробовать обратиться к гугл календарю и запланировать встречу(к гугл чему-то) / кнопка войти и выйти
+// TODO 4) вставить тектовое поле (инпут) и привязать сабмит к запросу GPT и остальному функционалу(записать в messages, localStorage)
+// TODO 5) сохранить всю историю в localStorage, но с ограничением в максимум 20 сообщений(когда приходит новое удаляется самое старое)
+// TODO 6) на 75 строке(красное) сделать проверку на команды, например (Установи, Напомни еще... ) то вместо запроса к GPT
+// TODO добавляет тудушку/устанавливает будильник, встречу и т.д.
+// TODO 7) backend + tests
 
 const MainPage = () => {
   let mediaRecorder;
   let audioChunks = [];
-  let messages = [];
-  const [messagess, setMessagess] = useState([]);
-  const apiKey = '';
+  let newMessages = []; // TODO 0) подумать оставить или нет
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    localStorage.getItem('sessionGPT') !== null &&
+      setMessages(JSON.parse(localStorage.getItem('sessionGPT')));
+  }, []);
+
+  const apiKey = key;
 
   function startRecording() {
     navigator.mediaDevices
@@ -58,6 +74,7 @@ const MainPage = () => {
       .then(function (data) {
         const transcription = data.text;
         console.log('Текст распознанной речи:', transcription);
+        //! проверка на команды
         getGptResponse(transcription);
       })
       .catch(function (error) {
@@ -66,11 +83,12 @@ const MainPage = () => {
   }
 
   function getGptResponse(promptText) {
-    messages.push({
+    newMessages.push({
       role: 'user',
       content: promptText,
     });
-    setMessagess((prev) => [...prev, { role: 'user', content: promptText }]);
+    setMessages((prev) => [...prev, { role: 'user', content: promptText }]);
+    localStorage.setItem('sessionGPT', messages);
 
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -80,7 +98,7 @@ const MainPage = () => {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        messages,
+        messages: newMessages,
         max_tokens: 100,
         temperature: 0.7,
       }),
@@ -94,12 +112,19 @@ const MainPage = () => {
       })
       .then(function (data) {
         const gptResponse = data.choices[0].message.content;
-        messages.push({ role: 'assistant', content: gptResponse });
-        setMessagess((prev) => [
+        newMessages.push({ role: 'assistant', content: gptResponse });
+        setMessages((prev) => [
           ...prev,
           { role: 'assistant', content: gptResponse },
         ]);
         console.log('Ответ от GPT:', gptResponse);
+      })
+      .then(() => {
+        localStorage.setItem(
+          'sessionGPT',
+          JSON.stringify([...messages, ...newMessages])
+        );
+        console.log(JSON.parse(localStorage.getItem('sessionGPT')));
       })
       .catch(function (error) {
         console.error('Ошибка:', error);
@@ -108,8 +133,9 @@ const MainPage = () => {
 
   function clearStory() {
     console.log('Чистка истории сообщений');
-    messages = [];
-    setMessagess([]);
+    newMessages = [];
+    setMessages([]);
+    localStorage.removeItem('sessionGPT');
   }
 
   return (
@@ -125,7 +151,7 @@ const MainPage = () => {
         Очистка истории
       </button>
       <div>
-        {messagess?.map((item, i) => (
+        {messages?.map((item, i) => (
           <div key={i}>
             <p>{item.role}</p>
             <p>{item.content}</p>
