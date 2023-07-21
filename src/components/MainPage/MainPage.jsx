@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 const MainPage = () => {
   let mediaRecorder;
   let audioChunks = [];
   let messages = [];
-  const apiKey = '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';
+  const [messagess, setMessagess] = useState([]);
+  const apiKey = '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';
 
   function startRecording() {
     navigator.mediaDevices
@@ -67,6 +70,7 @@ const MainPage = () => {
       role: 'user',
       content: promptText,
     });
+    setMessagess((prev) => [...prev, { role: 'user', content: promptText }]);
 
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -91,6 +95,10 @@ const MainPage = () => {
       .then(function (data) {
         const gptResponse = data.choices[0].message.content;
         messages.push({ role: 'assistant', content: gptResponse });
+        setMessagess((prev) => [
+          ...prev,
+          { role: 'assistant', content: gptResponse },
+        ]);
         console.log('Ответ от GPT:', gptResponse);
       })
       .catch(function (error) {
@@ -101,6 +109,7 @@ const MainPage = () => {
   function clearStory() {
     console.log('Чистка истории сообщений');
     messages = [];
+    setMessagess([]);
   }
 
   return (
@@ -115,6 +124,14 @@ const MainPage = () => {
       <button type="button" onClick={clearStory}>
         Очистка истории
       </button>
+      <div>
+        {messagess?.map((item, i) => (
+          <div key={i}>
+            <p>{item.role}</p>
+            <p>{item.content}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
