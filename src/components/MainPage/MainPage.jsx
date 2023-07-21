@@ -5,7 +5,7 @@ const MainPage = () => {
   let audioChunks = [];
   let messages = [];
   const [messagess, setMessagess] = useState([]);
-  const apiKey = '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';
+  const apiKey = '';
 
   function startRecording() {
     navigator.mediaDevices
