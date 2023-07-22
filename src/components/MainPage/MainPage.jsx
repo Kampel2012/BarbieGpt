@@ -14,7 +14,7 @@ import DownloadTextFile from '../DownloadTextFile';
 // ? 8) Сделать мультиязычность RU/ENG может быть другие языки +++
 // TODO 9) Светлая/темная тема ?
 // TODO !! Сделать несколько вкладок с чатами.
-// TODO сделать выгрузку текстового файла с переводом
+// ? сделать выгрузку текстового файла с переводом ++
 // TODO сделать 4-й режим где надо будет просто вернуть текст
 
 const MainPage = () => {
@@ -85,34 +85,36 @@ const MainPage = () => {
 
   return (
     <LanguageContext.Provider value={language}>
-      <div className="flex flex-wrap gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
-        <button
-          type="button"
-          onMouseDown={startRecording}
-          onMouseUp={stopRecording}
-          className="hover:text-red-300"
-        >
-          {dictionary.btnStart[language] || 'Запись голоса'}
-        </button>
-        <button type="button" onClick={clearStory}>
-          {dictionary.btnReset[language] || 'Очистить историю'}
-        </button>
-        <DownloadTextFile messages={messages} />
-        {language === 'EN' && (
-          <button type="button" onClick={() => setLanguage('RU')}>
-            RU
+      <div className="gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
+        <div className="flex flex-wrap gap-5">
+          <button
+            type="button"
+            onMouseDown={startRecording}
+            onMouseUp={stopRecording}
+            className="hover:text-red-300"
+          >
+            {dictionary.btnStart[language] || 'Запись голоса'}
           </button>
-        )}
-        {language === 'RU' && (
-          <button type="button" onClick={() => setLanguage('EN')}>
-            EN
+          <button type="button" onClick={clearStory}>
+            {dictionary.btnReset[language] || 'Очистить историю'}
           </button>
-        )}
+          <DownloadTextFile messages={messages} />
+          {language === 'EN' && (
+            <button type="button" onClick={() => setLanguage('RU')}>
+              RU
+            </button>
+          )}
+          {language === 'RU' && (
+            <button type="button" onClick={() => setLanguage('EN')}>
+              EN
+            </button>
+          )}
+        </div>
         <div>
           {messages?.map((item, i) => (
             <div key={i}>
-              <p>{item.role}</p>
-              <p>{item.content}</p>
+              <p className="text-zinc-950">{item.role}</p>
+              <p className="text-gray-200 max-w-md px-2">{item.content}</p>
             </div>
           ))}
         </div>
