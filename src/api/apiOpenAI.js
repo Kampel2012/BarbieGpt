@@ -18,7 +18,7 @@ export async function sendAudioFile(audioBlob) {
     );
     return data?.text;
   } catch (error) {
-    console.warn(error); //TODO сделать уведомление об ошибке
+    console.warn(error); //TODO сделать уведомление об ошибке и трай кетч вынести для использования уведомлений поп-ап
   }
 }
 
