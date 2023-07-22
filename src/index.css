@@ -1,6 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   background-color: black;
-  padding-left: 100px;
-  padding-top: 50px;
-  color: white;
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { sendAudioFile, getGptResponse } from '../../api/apiOpenAI';
 import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
+import DownloadTextFile from '../DownloadTextFile';
 
 // ? 1) вынести функционал запроса в API отдельно +++
 // TODO 2) попробовать авторизовать пользователя через google id и сохранить полученный id в localStorage
@@ -12,6 +13,9 @@ import { getDictionary } from '../../utils/dictionary';
 // TODO 7) backend + tests
 // ? 8) Сделать мультиязычность RU/ENG может быть другие языки +++
 // TODO 9) Светлая/темная тема ?
+// TODO !! Сделать несколько вкладок с чатами.
+// TODO сделать выгрузку текстового файла с переводом
+// TODO сделать 4-й режим где надо будет просто вернуть текст
 
 const MainPage = () => {
   let mediaRecorder;
@@ -81,17 +85,19 @@ const MainPage = () => {
 
   return (
     <LanguageContext.Provider value={language}>
-      <div>
+      <div className="flex flex-wrap gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
         <button
           type="button"
           onMouseDown={startRecording}
           onMouseUp={stopRecording}
+          className="hover:text-red-300"
         >
           {dictionary.btnStart[language] || 'Запись голоса'}
         </button>
         <button type="button" onClick={clearStory}>
           {dictionary.btnReset[language] || 'Очистить историю'}
         </button>
+        <DownloadTextFile messages={messages} />
         {language === 'EN' && (
           <button type="button" onClick={() => setLanguage('RU')}>
             RU

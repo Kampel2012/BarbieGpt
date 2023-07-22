@@ -8,5 +8,9 @@ export function getDictionary() {
       RU: 'Очистка истории',
       EN: 'Clear History',
     },
+    btnDownloadTextFile: {
+      RU: 'Скачать текстовый файл',
+      EN: 'Download text file',
+    },
   };
 }
