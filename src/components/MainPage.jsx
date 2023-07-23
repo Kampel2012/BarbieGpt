@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { sendAudioFile, getGptResponse } from '../../api/apiOpenAI';
-import { LanguageContext } from '../../context/LanguageContext';
-import { getDictionary } from '../../utils/dictionary';
-import DownloadTextFile from '../DownloadTextFile';
+import { sendAudioFile, getGptResponse } from '../api/apiOpenAI';
+import { LanguageContext } from '../context/LanguageContext';
+import { getDictionary } from '../utils/dictionary';
+import DownloadTextFile from './DownloadTextFile';
+import ReminderComponent from './ReminderComponent';
 
 // ? 1) вынести функционал запроса в API отдельно +++
 // TODO 2) попробовать авторизовать пользователя через google id и сохранить полученный id в localStorage
@@ -10,12 +11,13 @@ import DownloadTextFile from '../DownloadTextFile';
 // TODO 4) вставить тектовое поле (инпут) и привязать сабмит к запросу GPT и остальному функционалу(записать в messages, localStorage)
 // TODO 5) сохранить всю историю в localStorage, но с ограничением в максимум 20 сообщений(когда приходит новое удаляется самое старое)
 // TODO 6) Добавить режимы чтобы вместо запроса к GPT добавлял тудушку/устанавливает будильник, встречу и т.д.
-// TODO 7) backend + tests
+// * 7) backend + tests в процессе Полина
 // ? 8) Сделать мультиязычность RU/ENG может быть другие языки +++
 // TODO 9) Светлая/темная тема ?
 // TODO !! Сделать несколько вкладок с чатами.
 // ? сделать выгрузку текстового файла с переводом ++
 // TODO сделать 4-й режим где надо будет просто вернуть текст
+// * уведомления - в процессе Тоша
 
 const MainPage = () => {
   let mediaRecorder;
@@ -118,6 +120,7 @@ const MainPage = () => {
             </div>
           ))}
         </div>
+        <ReminderComponent />
       </div>
     </LanguageContext.Provider>
   );
