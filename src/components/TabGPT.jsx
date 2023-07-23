@@ -44,13 +44,17 @@ function TabGPT() {
         console.log('Текст транскрипции:', transcriptionFromOpenAi);
         // const gptResponse = await askGPT(transcriptionFromOpenAi);
         const gptResponse = await askGPT(
-          `Преобразуй запрос в вид: Text: описание кратко, Time:  число в миллисекундах без комментариев только число. ${transcriptionFromOpenAi}`
+          `Преобразуй запрос в вид: Text: описание кратко, Time:  число в миллисекундах. ${transcriptionFromOpenAi}`
         );
-        let a = gptResponse.split(', ');
-        a = a.length > 1 ? a : a.split('\n');
+        let a = gptResponse.split('Time');
+        a = a.length > 1 ? a : a.split('\nTime');
+        if (a.length <= 1) {
+          console.warn('Ошибка неверный ответ от GPT'); //! сделать тут ошибку
+          return;
+        }
         a = a.map((item, i) => {
           if (i === 1) {
-            const b = item.replace('Time: ', '');
+            const b = item.replace(': ', '');
             return parseInt(b);
           }
           return item.replace('Text: ', '');
