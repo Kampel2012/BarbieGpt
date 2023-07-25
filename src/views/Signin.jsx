@@ -13,7 +13,7 @@ const Signin = () => {
   return (
     <>
       <Header />
-      <div className="bg-bgFrame pt-16">
+      <div className="bg-bgFrame pt-16 min-h-[calc(100vh-80px)]">
         <div className="mx-auto text-center max-w-[480px] px-6 border border-secondary border-opacity-30 rounded-xl bg-white">
           <h1 className="leading-tight text-3xl font-extrabold tracking-tight text-left pt-8">
             Вход

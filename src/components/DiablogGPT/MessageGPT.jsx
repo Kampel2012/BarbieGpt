@@ -18,7 +18,7 @@ function MessageGPT({ item }) {
 
   return (
     <div
-      className={`rounded-xl pt-4 pb-8 mb-5 ${
+      className={`rounded-xl pt-4 pb-8 mb-5 mr-2 ${
         isUser ? 'bg-chatBlue' : 'bg-chatGray'
       }`}
     >

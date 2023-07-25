@@ -50,32 +50,27 @@ const DialogGPT = () => {
 
         const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
         console.log('Текст транскрипции:', transcriptionFromOpenAi);
-        return transcriptionFromOpenAi;
+        await askGPT(transcriptionFromOpenAi);
       });
     }
   }
 
-  async function onStopHandler() {
-    const promptText = stopRecording();
-    const newMessages = [
-      {
-        role: 'user',
-        content: promptText,
-      },
-    ];
-    const gptResponse = await askGPT(promptText);
-    newMessages.push({ role: 'assistant', content: gptResponse });
-    localStorage.setItem(
-      'sessionGPT',
-      JSON.stringify([...messages, ...newMessages])
-    );
-    setMessages((prev) => [...prev, ...newMessages]);
-  }
-
-  async function askGPT(newMessages) {
+  async function askGPT(promptText) {
     try {
+      const newMessages = [
+        {
+          role: 'user',
+          content: promptText,
+        },
+      ];
       const gptResponse = await getGptResponse([...messages, ...newMessages]);
       console.log('Ответ от GPT:', gptResponse);
+      newMessages.push({ role: 'assistant', content: gptResponse });
+      localStorage.setItem(
+        'sessionGPT',
+        JSON.stringify([...messages, ...newMessages])
+      );
+      setMessages((prev) => [...prev, ...newMessages]);
       return gptResponse;
     } catch (error) {
       console.log(error);
@@ -95,7 +90,7 @@ const DialogGPT = () => {
       </div>
 
       <div
-        className={`py-6 h-[calc(100vh-120px-68px)] overflow-y-auto ${scrollStyle}`}
+        className={`pt-6 mb-4 h-[calc(100vh-120px-68px)] overflow-y-auto ${scrollStyle}`}
       >
         <div>
           {messages?.map((item, i) => (
@@ -120,7 +115,7 @@ const DialogGPT = () => {
           <button
             type="button"
             onMouseDown={startRecording}
-            onMouseUp={onStopHandler}
+            onMouseUp={stopRecording}
             className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
           >
             {dictionary.btnStart[language] || 'Начать диктовку'}
