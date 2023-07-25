@@ -1,12 +1,12 @@
-import { useContext } from 'react';
+/* import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
-import { getDictionary } from '../utils/dictionary';
+import { getDictionary } from '../utils/dictionary'; */
 import { useState } from 'react';
 import Header from '../components/Header';
 
 const Signup = () => {
-  const { language } = useContext(LanguageContext);
-  const dictionary = getDictionary();
+  /*   const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary(); */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

@@ -6,6 +6,8 @@ import { getGptResponse, sendAudioFile } from '../../api/apiOpenAI';
 import DownloadTextFile from '../DownloadTextFile';
 import { useState } from 'react';
 import styles from './DialogGPT.module.css';
+import sendicon from '../../assets/icon/sendicon.svg';
+import mic from '../../assets/icon/mic.svg';
 
 import MessageGPT from './MessageGPT';
 
@@ -102,7 +104,39 @@ const DialogGPT = () => {
         </div>
       </div>
 
-      <div className="gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
+      <div className="flex items-center">
+        <div className="border border-secondary border-opacity-30 rounded-xl overflow-hidden flex items-center grow">
+          <input
+            type="text"
+            placeholder="Задайте вопрос нейросети"
+            className="px-4 py-3 leading-snug focus:outline-none grow font-semibold"
+          />
+          {/* <input type="file" /> */}
+          <button className="bg-seagreen py-3 px-3">
+            <img src={sendicon}></img>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            onMouseDown={startRecording}
+            onMouseUp={onStopHandler}
+            className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
+          >
+            {dictionary.btnStart[language] || 'Начать диктовку'}
+            <img src={mic} alt="Голосовой ввод" className="ml-2" />
+          </button>
+        </div>
+        <DownloadTextFile messages={messages} />
+      </div>
+    </div>
+  );
+};
+
+export default DialogGPT;
+
+{
+  /*       <div className="gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
         <div className="flex flex-wrap gap-5">
           <button
             type="button"
@@ -117,9 +151,5 @@ const DialogGPT = () => {
           </button>
           <DownloadTextFile messages={messages} />
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default DialogGPT;
+      </div> */
+}

@@ -1,7 +1,7 @@
 export function getDictionary() {
   return {
     btnStart: {
-      RU: 'Запись голоса',
+      RU: 'Начать диктовку',
       EN: 'Voice recording',
     },
     btnReset: {
@@ -9,8 +9,8 @@ export function getDictionary() {
       EN: 'Clear History',
     },
     btnDownloadTextFile: {
-      RU: 'Скачать текстовый файл',
-      EN: 'Download text file',
+      RU: 'Скачать',
+      EN: 'Download',
     },
   };
 }

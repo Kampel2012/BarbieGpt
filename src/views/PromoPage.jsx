@@ -1,14 +1,14 @@
 import micIcon from '../assets/icon/mic.svg';
 import vector from '../assets/VectorPromo.svg';
 import MyButton from '../components/UI/MyButton';
-import { useContext } from 'react';
+/* import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
-import { getDictionary } from '../utils/dictionary';
+import { getDictionary } from '../utils/dictionary'; */
 import Header from '../components/Header';
 
 const PromoPage = () => {
-  const { language } = useContext(LanguageContext);
-  const dictionary = getDictionary();
+  /*   const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary(); */
 
   return (
     <>
