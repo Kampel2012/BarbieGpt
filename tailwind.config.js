@@ -9,6 +9,7 @@ export default {
       backgroundImage: {
         headerlogo: "url('./assets/logo.svg')",
         btnIconUser: "url('./assets/icon/user.svg')",
+        messageIcon: "url('./assets/icon/message.svg')",
         bgFrame: "url('./assets/borderframe.png')",
       },
       colors: {
@@ -16,6 +17,10 @@ export default {
         secondary: '#7B7B7B',
         tertiary: '#E9E9E9',
         seagreen: '#46D3FF',
+        activeBlue: '#B5EDFF',
+        chatBlue: '#DAF6FF',
+        chatGray: '#F4F4F4',
+        bgBlue: '#EDFBFF',
       },
       fontFamily: {
         sans: ['Mulish', 'sans-serif'],
