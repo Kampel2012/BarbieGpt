@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import key from '../../../key';
 
 const MainPage = () => {
   let mediaRecorder;
   let audioChunks = [];
   let messages = [];
   const [messagess, setMessagess] = useState([]);
-  const apiKey = '';
+  const apiKey = key;
 
   function startRecording() {
     navigator.mediaDevices
