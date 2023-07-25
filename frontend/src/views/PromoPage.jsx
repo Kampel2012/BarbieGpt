@@ -28,7 +28,7 @@ const PromoPage = () => {
             </MyButton>
           </div>
         </div>
-        <div className="w-auto h-auto absolute bottom-0 left-0">
+        <div className="w-auto h-auto absolute inset-0 flex items-end justify-center">
           <img src={vector} alt="Вектор" />
         </div>
       </div>
