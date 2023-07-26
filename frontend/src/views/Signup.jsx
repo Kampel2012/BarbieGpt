@@ -4,11 +4,26 @@ import { getDictionary } from '../utils/dictionary'; */
 import { useState } from 'react';
 import Header from '../components/Header';
 
+import api from '../api/api';
+
 const Signup = () => {
   /*   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary(); */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const res = await api.register({ email, password });
+      
+      console.log(res.email);
+    } catch(err) {
+
+      console.error(err);
+    }
+  }
 
   return (
     <>
@@ -20,7 +35,7 @@ const Signup = () => {
             Регистрация
           </h1>
 
-          <form className="text-left pt-6">
+          <form className="text-left pt-6" onSubmit={handleSubmit}>
             <label>
               <p className="mb-2 text-secondary text-sm">
                 Введите ваш e-mail для регистрации
@@ -55,7 +70,7 @@ const Signup = () => {
               </span>
             </label>
             <button
-              type="button"
+              type="submit"
               className="bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30"
             >
               Создать аккаунт
