@@ -4,7 +4,6 @@ import signout from '../../assets/icon/signout.svg';
 import EmptyProject from './EmptyProject';
 import ProjectBadge from './ProjectBadge';
 
-// eslint-disable-next-line react/prop-types
 const MainAsideBar = ({ chats }) => {
   return (
     <div className="p-6 max-w-[280px] bg-bgBlue flex flex-col justify-between min-h-screen">
