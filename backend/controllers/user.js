@@ -96,7 +96,7 @@ export async function register(req, res, next) {
     newUser.password = await bcrypt.hash(newUser.password, SALT_ROUNDES);
     const user = await User.create(newUser);
     const {
-      email, name, about, avatar,
+      email
     } = user;
     res.status(http2Constants.HTTP_STATUS_CREATED).send({
       email,
