@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Joi } from 'celebrate';
 import {
   getAllChats,
+  // getChatById,
   updateChatHistory,
   addChat,
   deleteChatById,
@@ -11,6 +12,16 @@ const router = Router();
 
 router.get('/', getAllChats);
 
+// router.get(
+//   '/:chatId',
+//   celebrate({
+//     params: Joi.object().keys({
+//       chatId: Joi.string().length(24).hex(),
+//     }),
+//   }),
+//   getChatById,
+// );
+
 router.patch(
   '/:chatId',
   celebrate({
@@ -18,6 +29,7 @@ router.patch(
       chatId: Joi.string().length(24).hex(),
     }),
     body: Joi.object().keys({
+      title: Joi.string().required(),
       messages: Joi.array().required()
     }),
   }),
@@ -31,6 +43,7 @@ router.post(
       _id: Joi.string().length(24).hex(),
     }),
     body: Joi.object().keys({
+      title: Joi.string().required(),
       messages: Joi.array()
     }),
   }),

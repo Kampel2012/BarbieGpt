@@ -4,11 +4,26 @@ import { getDictionary } from '../utils/dictionary'; */
 import { useState } from 'react';
 import Header from '../components/Header';
 
+import api from '../api/api';
+
 const Signin = () => {
   /*   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary(); */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const res = await api.authorize({ email, password });
+      
+      console.log(res.jwt);
+    } catch(err) {
+
+      console.error(err);
+    }
+  }
 
   return (
     <>
@@ -19,7 +34,7 @@ const Signin = () => {
             Вход
           </h1>
 
-          <form className="text-left pt-6">
+          <form className="text-left pt-6" onSubmit={handleSubmit}>
             <label>
               <p className="mb-2 text-secondary text-sm">Введите ваш e-mail</p>
               <input
@@ -47,7 +62,7 @@ const Signin = () => {
               <span className="text-red-500 text-xs">Неверный пароль</span>
             </label>
             <button
-              type="button"
+              type="submit"
               className="bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30 "
             >
               Войти
