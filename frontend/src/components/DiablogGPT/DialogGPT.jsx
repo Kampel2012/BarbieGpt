@@ -8,6 +8,7 @@ import { useState } from 'react';
 import styles from './DialogGPT.module.css';
 import sendicon from '../../assets/icon/sendicon.svg';
 import mic from '../../assets/icon/mic.svg';
+import trash from '../../assets/icon/trash.svg';
 
 import MessageGPT from './MessageGPT';
 
@@ -85,8 +86,11 @@ const DialogGPT = () => {
 
   return (
     <div className="flex-grow bg-white py-6 px-8 ">
-      <div className="border-b border-secondary border-opacity-30">
-        <h2 className="text-2xl font-semibold pl-6 py-4">Лекции по матану</h2>
+      <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
+        <h2 className="text-2xl font-semibold ">Лекции по матану</h2>
+        <button type="button" onClick={clearStory}>
+          <img src={trash} alt="Очистить историю сообщений" />
+        </button>
       </div>
 
       <div
