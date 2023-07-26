@@ -14,7 +14,6 @@ export default function auth(req, res, next) {
   try {
     payload = verifyToken(token);
   } catch (error) {
-    console.log(error);
     throw new UnauthorizedError('Необходима авторизация');
   }
 

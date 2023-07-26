@@ -89,7 +89,6 @@ export async function register(req, res, next) {
       !newUser.email
       || !newUser.password
       || !validator.isEmail(newUser.email)
-      || (newUser.avatar && !validator.isURL(newUser.avatar))
     ) {
       throw new mongoose.Error.ValidationError();
     }
@@ -101,9 +100,6 @@ export async function register(req, res, next) {
     } = user;
     res.status(http2Constants.HTTP_STATUS_CREATED).send({
       email,
-      name,
-      about,
-      avatar,
     });
   } catch (error) {
     errorHandler(error, res, next);

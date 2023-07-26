@@ -47,7 +47,6 @@ export const addNote = async (req, res, next) => {
 export const deleteNoteById = async (req, res, next) => {
   try {
     const note = await Note.findById(req.params.noteId).populate(['owner']).orFail();
-    console.log(note);
     if (note.owner._id.toString() !== req.user._id) {
       throw new ForbiddenError('Недостаточно прав для данного действия');
     }
