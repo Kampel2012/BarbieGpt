@@ -11,19 +11,30 @@ import MessageGPT from './MessageGPT';
 import TextInputGPT from './TextInputGPT';
 import VoiceInputGPT from './VoiceInputGPT';
 import EmptyDialogMessage from './EmptyDialogMessage';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DialogGPT = () => {
+  const params = useParams();
+
+  //TODO делаем запрос на сервер и получаем ответ data => {name: string, messages: []}
+
   let mediaRecorder;
   let audioChunks = [];
   const [messages, setMessages] = useState([]);
   /*   const dictionary = getDictionary();
   const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem('sessionGPT') !== null &&
-      setMessages(JSON.parse(localStorage.getItem('sessionGPT')));
-  }, []);
+    localStorage.getItem('chats') !== null &&
+      setMessages(
+        JSON.parse(localStorage.getItem('chats')).find(
+          (i) => i.id === parseInt(params.chatId)
+        ).messages
+      );
+  }, [params]);
 
   function startRecording() {
     navigator.mediaDevices
@@ -49,6 +60,7 @@ const DialogGPT = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Создаем Blob из массива аудио частей
         audioChunks = [];
 
+        setIsLoading(true);
         const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
         console.log('Текст транскрипции:', transcriptionFromOpenAi);
         await askGPT(transcriptionFromOpenAi);
@@ -68,20 +80,36 @@ const DialogGPT = () => {
       console.log('Ответ от GPT:', gptResponse);
       newMessages.push({ role: 'assistant', content: gptResponse });
       localStorage.setItem(
-        'sessionGPT',
-        JSON.stringify([...messages, ...newMessages])
+        'chats',
+        JSON.stringify(
+          JSON.parse(localStorage.getItem('chats')).map((item) =>
+            item.id === parseInt(params.chatId)
+              ? { ...item, messages: [...messages, ...newMessages] }
+              : item
+          )
+        )
       );
       setMessages((prev) => [...prev, ...newMessages]);
       return gptResponse;
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   function clearStory() {
     console.log('Чистка истории сообщений');
     setMessages([]);
-    localStorage.removeItem('sessionGPT');
+    navigate('/main');
+    localStorage.setItem(
+      'chats',
+      JSON.stringify(
+        JSON.parse(localStorage.getItem('chats')).filter(
+          (i) => i.id !== parseInt(params.chatId)
+        )
+      )
+    );
   }
 
   return (
@@ -101,6 +129,14 @@ const DialogGPT = () => {
             messages.map((item, i) => <MessageGPT key={i} item={item} />)
           ) : (
             <EmptyDialogMessage />
+          )}
+          {isLoading && (
+            <MessageGPT
+              item={{
+                role: 'assistant',
+                content: 'Chatty AI обрабатывает запрос...',
+              }}
+            />
           )}
         </div>
       </div>

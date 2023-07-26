@@ -1,3 +1,4 @@
+import DialogGPT from '../components/DiablogGPT/DialogGPT';
 import MainPage from '../views/MainPage';
 import PromoPage from '../views/PromoPage';
 import Signin from '../views/Signin';
@@ -5,11 +6,17 @@ import Signup from '../views/Signup';
 
 const routes = [
   {
-    path: '/',
+    path: '/main',
     element: <MainPage />,
+    children: [
+      {
+        path: ':chatId',
+        element: <DialogGPT />,
+      },
+    ],
   },
   {
-    path: '/promo',
+    path: '/',
     element: <PromoPage />,
   },
   {

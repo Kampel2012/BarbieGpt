@@ -7,7 +7,7 @@ const VoiceInputGPT = ({ startRecording, stopRecording }) => {
       type="button"
       onMouseDown={startRecording}
       onMouseUp={stopRecording}
-      className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
+      className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold active:bg-red-400"
     >
       {'Начать диктовку'}
       <img src={mic} alt="Голосовой ввод" className="ml-2" />

@@ -1,8 +1,11 @@
-import plus from '../../assets/icon/plus.svg';
+import PropTypes from 'prop-types';
 import ThemeSwitcher from '../ThemeSwitcher';
 import signout from '../../assets/icon/signout.svg';
+import EmptyProject from './EmptyProject';
+import ProjectBadge from './ProjectBadge';
 
-const MainAsideBar = () => {
+// eslint-disable-next-line react/prop-types
+const MainAsideBar = ({ chats }) => {
   return (
     <div className="p-6 max-w-[280px] bg-bgBlue flex flex-col justify-between min-h-screen">
       <div>
@@ -21,19 +24,16 @@ const MainAsideBar = () => {
             </p>
           </div>
         </div>
-        <div className="mt-6">
-          <button
-            type="button"
-            className="flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
-          >
-            <img src={plus} className="" />
-            <p>Создать проект</p>
-          </button>
-          <p className="text-primary text-sm mt-2">
-            У вас пока не создано ни одного проекта. Нажмите создать проект
-            чтобы приступить к работе
-          </p>
-        </div>
+
+        {chats.length > 0 ? (
+          <div className="mt-2 flex flex-col gap-2">
+            {chats.map((item) => (
+              <ProjectBadge key={item.id} name={item.name} id={item.id} />
+            ))}
+          </div>
+        ) : (
+          <EmptyProject />
+        )}
       </div>
       <div className="">
         <button type="button" className="mb-4 px-3 py-2 flex gap-2">
@@ -43,6 +43,10 @@ const MainAsideBar = () => {
       </div>
     </div>
   );
+};
+
+MainAsideBar.propTypes = {
+  chats: PropTypes.array,
 };
 
 export default MainAsideBar;
