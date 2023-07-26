@@ -25,7 +25,8 @@ function errorHandler(error, res, next) {
 
 export const getAllChats = async (req, res, next) => {
   try {
-    const allChats = await Chat.find({});
+    const { _id } = req.user;
+    const allChats = await Chat.find({owner: _id});
     res.status(http2Constants.HTTP_STATUS_OK).send(allChats);
   } catch (error) {
     errorHandler(error, res, next);
