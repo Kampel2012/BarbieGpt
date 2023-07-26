@@ -1,28 +1,40 @@
 import { useEffect } from 'react';
-import { LanguageContext } from '../../context/LanguageContext';
+/* import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
-import { useContext } from 'react';
+import { useContext } from 'react'; */
 import { getGptResponse, sendAudioFile } from '../../api/apiOpenAI';
 import DownloadTextFile from '../DownloadTextFile';
 import { useState } from 'react';
 import styles from './DialogGPT.module.css';
-import sendicon from '../../assets/icon/sendicon.svg';
-import mic from '../../assets/icon/mic.svg';
-
+import trash from '../../assets/icon/trash.svg';
 import MessageGPT from './MessageGPT';
+import TextInputGPT from './TextInputGPT';
+import VoiceInputGPT from './VoiceInputGPT';
+import EmptyDialogMessage from './EmptyDialogMessage';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DialogGPT = () => {
+  const params = useParams();
+
+  //TODO делаем запрос на сервер и получаем ответ data => {name: string, messages: []}
+
   let mediaRecorder;
   let audioChunks = [];
   const [messages, setMessages] = useState([]);
-  const dictionary = getDictionary();
-  const language = useContext(LanguageContext);
+  /*   const dictionary = getDictionary();
+  const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.getItem('sessionGPT') !== null &&
-      setMessages(JSON.parse(localStorage.getItem('sessionGPT')));
-  }, []);
+    localStorage.getItem('chats') !== null &&
+      setMessages(
+        JSON.parse(localStorage.getItem('chats')).find(
+          (i) => i.id === parseInt(params.chatId)
+        ).messages
+      );
+  }, [params]);
 
   function startRecording() {
     navigator.mediaDevices
@@ -48,6 +60,7 @@ const DialogGPT = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Создаем Blob из массива аудио частей
         audioChunks = [];
 
+        setIsLoading(true);
         const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
         console.log('Текст транскрипции:', transcriptionFromOpenAi);
         await askGPT(transcriptionFromOpenAi);
@@ -67,61 +80,73 @@ const DialogGPT = () => {
       console.log('Ответ от GPT:', gptResponse);
       newMessages.push({ role: 'assistant', content: gptResponse });
       localStorage.setItem(
-        'sessionGPT',
-        JSON.stringify([...messages, ...newMessages])
+        'chats',
+        JSON.stringify(
+          JSON.parse(localStorage.getItem('chats')).map((item) =>
+            item.id === parseInt(params.chatId)
+              ? { ...item, messages: [...messages, ...newMessages] }
+              : item
+          )
+        )
       );
       setMessages((prev) => [...prev, ...newMessages]);
       return gptResponse;
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   function clearStory() {
     console.log('Чистка истории сообщений');
     setMessages([]);
-    localStorage.removeItem('sessionGPT');
+    navigate('/main');
+    localStorage.setItem(
+      'chats',
+      JSON.stringify(
+        JSON.parse(localStorage.getItem('chats')).filter(
+          (i) => i.id !== parseInt(params.chatId)
+        )
+      )
+    );
   }
 
   return (
     <div className="flex-grow bg-white py-6 px-8 ">
-      <div className="border-b border-secondary border-opacity-30">
-        <h2 className="text-2xl font-semibold pl-6 py-4">Лекции по матану</h2>
+      <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
+        <h2 className="text-2xl font-semibold">Лекции по матану</h2>
+        <button type="button" onClick={clearStory}>
+          <img src={trash} alt="Очистить историю сообщений" />
+        </button>
       </div>
 
       <div
         className={`pt-6 mb-4 h-[calc(100vh-120px-68px)] overflow-y-auto ${scrollStyle}`}
       >
-        <div>
-          {messages?.map((item, i) => (
-            <MessageGPT key={i} item={item} />
-          ))}
+        <div className="h-full">
+          {messages.length > 0 ? (
+            messages.map((item, i) => <MessageGPT key={i} item={item} />)
+          ) : (
+            <EmptyDialogMessage />
+          )}
+          {isLoading && (
+            <MessageGPT
+              item={{
+                role: 'assistant',
+                content: 'Chatty AI обрабатывает запрос...',
+              }}
+            />
+          )}
         </div>
       </div>
 
       <div className="flex items-center">
-        <div className="border border-secondary border-opacity-30 rounded-xl overflow-hidden flex items-center grow">
-          <input
-            type="text"
-            placeholder="Задайте вопрос нейросети"
-            className="px-4 py-3 leading-snug focus:outline-none grow font-semibold"
-          />
-          {/* <input type="file" /> */}
-          <button className="bg-seagreen py-3 px-3">
-            <img src={sendicon}></img>
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            onMouseDown={startRecording}
-            onMouseUp={stopRecording}
-            className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
-          >
-            {dictionary.btnStart[language] || 'Начать диктовку'}
-            <img src={mic} alt="Голосовой ввод" className="ml-2" />
-          </button>
-        </div>
+        <TextInputGPT />
+        <VoiceInputGPT
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+        />
         <DownloadTextFile messages={messages} />
       </div>
     </div>
@@ -129,22 +154,3 @@ const DialogGPT = () => {
 };
 
 export default DialogGPT;
-
-{
-  /*       <div className="gap-5 px-8 py-4 border text-white font-semibold mt-4 container mx-auto bg-gradient-to-r from-blue-500 to-cyan-500">
-        <div className="flex flex-wrap gap-5">
-          <button
-            type="button"
-            onMouseDown={startRecording}
-            onMouseUp={onStopHandler}
-            className="hover:text-red-300"
-          >
-            {dictionary.btnStart[language] || 'Запись голоса'}
-          </button>
-          <button type="button" onClick={clearStory}>
-            {dictionary.btnReset[language] || 'Очистить историю'}
-          </button>
-          <DownloadTextFile messages={messages} />
-        </div>
-      </div> */
-}

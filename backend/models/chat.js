@@ -6,6 +6,10 @@ const chatSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
   messages: {
     type: Array,
     required: true,

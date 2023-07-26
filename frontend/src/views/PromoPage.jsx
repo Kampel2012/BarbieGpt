@@ -13,7 +13,7 @@ const PromoPage = () => {
   return (
     <>
       <Header />
-      <div className="bg-bgFrame relative">
+      <div className="bg-bgFrame relative z-0">
         <div className="container min-h-[calc(100vh-80px)] text-center max-w-6xl">
           <h1 className="text-6xl font-extrabold leading-tight max-w-6xl mx-auto text-primary mb-4 pt-52">
             Превращаем аудиозаписи в текст с высокой точностью и оптимизацией
@@ -22,13 +22,13 @@ const PromoPage = () => {
             Помогаем пользователям сокращать, улучшать, трансформировать
             аудиозаписи и экономить время
           </p>
-          <div className="mx-auto max-w-max ">
+          <div className="mx-auto max-w-max pb-20">
             <MyButton>
               Начать использование <img src={micIcon} alt="Микрофон" />
             </MyButton>
           </div>
         </div>
-        <div className="w-auto h-auto absolute inset-0 flex items-end justify-center">
+        <div className="w-auto h-auto absolute inset-0 flex items-end justify-center -z-10">
           <img src={vector} alt="Вектор" />
         </div>
       </div>

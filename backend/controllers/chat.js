@@ -35,7 +35,7 @@ export const getAllChats = async (req, res, next) => {
 
 export const updateChatHistory = async (req, res, next) => {
   try {
-    const updatedChat = await Chat.findByIdAndUpdate(req.params.chatId, { messages: req.body.messages}, {
+    const updatedChat = await Chat.findByIdAndUpdate(req.params.chatId, { title: req.body.title, messages: req.body.messages}, {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
     }).orFail();
@@ -47,9 +47,9 @@ export const updateChatHistory = async (req, res, next) => {
 
 export const addChat = async (req, res, next) => {
   try {
-    const { messages = [] } = req.body;
+    const { title, messages = [] } = req.body;
     const { _id } = req.user;
-    const chat = await Chat.create({ owner: _id, messages });
+    const chat = await Chat.create({ owner: _id, title, messages });
     res.status(http2Constants.HTTP_STATUS_CREATED).send(chat);
   } catch (error) {
     errorHandler(error, res, next);
