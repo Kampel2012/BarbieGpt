@@ -15,16 +15,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const DialogGPT = () => {
   const params = useParams();
-
   //TODO делаем запрос на сервер и получаем ответ data => {name: string, messages: []}
-
-  let mediaRecorder;
-  let audioChunks = [];
   const [messages, setMessages] = useState([]);
   /*   const dictionary = getDictionary();
   const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,40 +31,64 @@ const DialogGPT = () => {
       );
   }, [params]);
 
-  function startRecording() {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true }) // Запрашиваем доступ к микрофону
-      .then(function (stream) {
-        mediaRecorder = new MediaRecorder(stream); // Создаем объект MediaRecorder для записи аудио
-        mediaRecorder.start(); // Начинаем запись
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioChunks, setAudioChunks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isBusy, setIsBusy] = useState(false);
 
-        mediaRecorder.addEventListener('dataavailable', function (e) {
-          audioChunks.push(e.data); // Сохраняем части аудио в массив
-        });
-      })
-      .catch(function (err) {
-        console.error('Ошибка доступа к микрофону:', err);
-      });
-  }
-
-  function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-      mediaRecorder.stop(); // Останавливаем запись
-
-      mediaRecorder.addEventListener('stop', async function () {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Создаем Blob из массива аудио частей
-        audioChunks = [];
-
-        setIsLoading(true);
-        const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
-        console.log('Текст транскрипции:', transcriptionFromOpenAi);
-        await askGPT(transcriptionFromOpenAi);
-      });
+  async function startRecording() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      setMediaRecorder(recorder);
+      setIsBusy(true);
+      recorder.addEventListener('dataavailable', handleDataAvailable);
+      recorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error('Ошибка доступа к микрофону:', err);
     }
   }
 
+  useEffect(() => {
+    (async () => {
+      if (isBusy) return;
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const transcriptionFromOpenAi = await processAudioBlob(audioBlob);
+      await askGPT(transcriptionFromOpenAi);
+    })();
+    // * Другие зависимости, предлагаемые линтом, не нужны и сломают работу приложения
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBusy]);
+
+  function handleDataAvailable(e) {
+    console.log('устанавливаем чанки');
+    setAudioChunks((prevChunks) => [...prevChunks, e.data]);
+    setIsBusy(false);
+  }
+
+  async function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  }
+
+  async function processAudioBlob(audioBlob) {
+    if (audioBlob.size <= 10000) return;
+    setIsLoading(true);
+    const transcriptionFromOpenAi = await sendAudioFile(audioBlob);
+    console.log('Текст транскрипции:', transcriptionFromOpenAi);
+    setAudioChunks([]);
+    setIsLoading(false);
+    return transcriptionFromOpenAi;
+  }
+
   async function askGPT(promptText) {
+    if (!promptText) return;
     try {
+      setIsLoading(true);
       const newMessages = [
         {
           role: 'user',
@@ -142,11 +161,19 @@ const DialogGPT = () => {
       </div>
 
       <div className="flex items-center">
-        <TextInputGPT />
+        <TextInputGPT
+          isLoading={isLoading}
+          askGPT={askGPT}
+          sendAudioFile={sendAudioFile}
+        />
+
         <VoiceInputGPT
           startRecording={startRecording}
           stopRecording={stopRecording}
+          isLoading={isLoading}
+          isRecording={isRecording}
         />
+
         <DownloadTextFile messages={messages} />
       </div>
     </div>
