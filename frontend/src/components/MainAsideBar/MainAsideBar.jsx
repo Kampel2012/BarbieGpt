@@ -4,8 +4,12 @@ import signout from '../../assets/icon/signout.svg';
 import EmptyProject from './EmptyProject';
 import ProjectBadge from './ProjectBadge';
 import plus from '../../assets/icon/plus.svg';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const MainAsideBar = ({ chats }) => {
+  const { signOut } = useContext(AuthContext);
+
   return (
     <div className="p-6 max-w-[280px] bg-bgBlue flex flex-col justify-between min-h-screen">
       <div>
@@ -43,7 +47,11 @@ const MainAsideBar = ({ chats }) => {
         </button>
       </div>
       <div className="">
-        <button type="button" className="mb-4 px-3 py-2 flex gap-2">
+        <button
+          type="button"
+          onClick={signOut}
+          className="mb-4 px-3 py-2 flex gap-2"
+        >
           <img src={signout} alt="Иконка выхода" /> Выход
         </button>
         <LanguageSwitcher />
