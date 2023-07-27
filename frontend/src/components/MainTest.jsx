@@ -5,6 +5,7 @@ import { getDictionary } from '../utils/dictionary';
 import DownloadTextFile from './DownloadTextFile';
 import ReminderComponent from './ReminderComponent';
 
+//! Компонент не задействован / оставлен как образец, удалю позже
 // ? 1) вынести функционал запроса в API отдельно +++
 // TODO 2) попробовать авторизовать пользователя через google id и сохранить полученный id в localStorage
 // TODO 3) если получилось, то попробовать обратиться к гугл календарю и запланировать встречу(к гугл чему-то) / кнопка войти и выйти

@@ -3,6 +3,7 @@ import ThemeSwitcher from '../ThemeSwitcher';
 import signout from '../../assets/icon/signout.svg';
 import EmptyProject from './EmptyProject';
 import ProjectBadge from './ProjectBadge';
+import plus from '../../assets/icon/plus.svg';
 
 const MainAsideBar = ({ chats }) => {
   return (
@@ -25,7 +26,7 @@ const MainAsideBar = ({ chats }) => {
         </div>
 
         {chats.length > 0 ? (
-          <div className="mt-2 flex flex-col gap-2">
+          <div className="my-2 flex flex-col gap-2">
             {chats.map((item) => (
               <ProjectBadge key={item.id} name={item.name} id={item.id} />
             ))}
@@ -33,6 +34,13 @@ const MainAsideBar = ({ chats }) => {
         ) : (
           <EmptyProject />
         )}
+        <button
+          type="button"
+          className="flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
+        >
+          <img src={plus} className="" />
+          <p>Создать проект</p>
+        </button>
       </div>
       <div className="">
         <button type="button" className="mb-4 px-3 py-2 flex gap-2">
