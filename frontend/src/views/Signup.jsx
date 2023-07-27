@@ -1,27 +1,35 @@
 /* import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { getDictionary } from '../utils/dictionary'; */
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
-
 import api from '../api/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Signup = () => {
   /*   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary(); */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!isAuth) return;
+    navigate('/main');
+  }, [isAuth, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      const res = await api.register({ email, password });
-      
-      console.log(res.email);
-    } catch(err) {
-
-      console.error(err);
+      await api.register({ email, password });
+      const res = await api.authorize({ email, password });
+      localStorage.setItem('CHATTYTOKEN', res.jwt);
+      setIsAuth(true);
+    } catch (err) {
+      alert(err);
     }
   }
 
@@ -87,12 +95,13 @@ const Signup = () => {
             </div>
             <div className="flex-1 h-0.5 bg-secondary bg-opacity-30"></div>
           </div>
-          <button
+          <Link
+            to={'/signin'}
             type="button"
             className="text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
           >
             Войти
-          </button>
+          </Link>
         </div>
       </div>
     </>

@@ -1,4 +1,5 @@
 import DialogGPT from '../components/DiablogGPT/DialogGPT';
+import ProtectedRoute from '../components/ProtectedRouter';
 import MainPage from '../views/MainPage';
 import PromoPage from '../views/PromoPage';
 import Signin from '../views/Signin';
@@ -7,11 +8,11 @@ import Signup from '../views/Signup';
 const routes = [
   {
     path: '/main',
-    element: <MainPage />,
+    element: <ProtectedRoute element={MainPage} />,
     children: [
       {
         path: ':chatId',
-        element: <DialogGPT />,
+        element: <ProtectedRoute element={DialogGPT} />,
       },
     ],
   },

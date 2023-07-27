@@ -1,27 +1,33 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../context/LanguageContext';
 import { getDictionary } from '../utils/dictionary';
-import { useState } from 'react';
 import Header from '../components/Header';
 
 import api from '../api/api';
+import { AuthContext } from '../context/AuthContext';
 
 const Signin = () => {
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuth) return;
+    navigate('/main');
+  }, [isAuth, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       const res = await api.authorize({ email, password });
-      
-      console.log(res.jwt);
-    } catch(err) {
-
-      console.error(err);
+      localStorage.setItem('CHATTYTOKEN', res.jwt);
+      setIsAuth(true);
+    } catch (err) {
+      alert(err);
     }
   }
 
@@ -36,7 +42,9 @@ const Signin = () => {
 
           <form className="text-left pt-6" onSubmit={handleSubmit}>
             <label>
-              <p className="mb-2 text-secondary text-sm">{dictionary.emailInputTitle[language]}</p>
+              <p className="mb-2 text-secondary text-sm">
+                {dictionary.emailInputTitle[language]}
+              </p>
               <input
                 className="w-full border border-secondary px-4 py-4 rounded-xl placeholder:font-medium border-opacity-30 leading-snug"
                 placeholder="Электронная почта"
@@ -49,7 +57,9 @@ const Signin = () => {
               </span>
             </label>
             <label>
-              <p className="mb-2 text-secondary text-sm mt-4">{dictionary.passwordInputTitle[language]}</p>
+              <p className="mb-2 text-secondary text-sm mt-4">
+                {dictionary.passwordInputTitle[language]}
+              </p>
               <input
                 className="w-full border border-secondary px-4 py-4 rounded-xl placeholder:font-medium border-opacity-30 leading-snug"
                 placeholder="Пароль"
@@ -75,12 +85,13 @@ const Signin = () => {
             </div>
             <div className="flex-1 h-0.5 bg-secondary bg-opacity-30"></div>
           </div>
-          <button
+          <Link
+            to={'/signup'}
             type="button"
             className="text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
           >
             {dictionary.registerBtn[language]}
-          </button>
+          </Link>
         </div>
       </div>
     </>

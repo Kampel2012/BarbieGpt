@@ -1,10 +1,10 @@
 import micIcon from '../assets/icon/mic.svg';
 import vector from '../assets/VectorPromo.svg';
-import MyButton from '../components/UI/MyButton';
 import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { getDictionary } from '../utils/dictionary';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
 
 const PromoPage = () => {
   const { language } = useContext(LanguageContext);
@@ -22,9 +22,14 @@ const PromoPage = () => {
             {dictionary.promoSubtitle[language]}
           </p>
           <div className="mx-auto max-w-max pb-20">
-            <MyButton>
-              {dictionary.promoBtn[language]} <img src={micIcon} alt="Микрофон" />
-            </MyButton>
+            <Link
+              to={'/signin'}
+              type="button"
+              className="flex bg-seagreen text-lg px-8 py-4 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold"
+            >
+              {dictionary.promoBtn[language]}
+              <img src={micIcon} alt="Начать использовать" />
+            </Link>
           </div>
         </div>
         <div className="w-auto h-auto absolute inset-0 flex items-end justify-center -z-10">
