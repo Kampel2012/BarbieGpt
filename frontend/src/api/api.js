@@ -7,24 +7,26 @@ class Api {
     return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
   }
 
-  register({ email, password }) {
-    return fetch(`${this._baseUrl}/signup`, {
+  async register({ email, password }) {
+    const res = await fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password })
-    }).then(this._checkResponse);
+      body: JSON.stringify({ email, password }),
+    });
+    return this._checkResponse(res);
   }
 
-  authorize({ email, password }) {
-    return fetch(`${this._baseUrl}/signin`, {
+  async authorize({ email, password }) {
+    const res = await fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password })
-    }).then(this._checkResponse)
+      body: JSON.stringify({ email, password }),
+    });
+    return this._checkResponse(res);
   }
 
   // ? нужны ли эти функции
@@ -49,77 +51,84 @@ class Api {
   //   }).then(this._checkResponse)
   // }
 
-  getNotes() {
-    return fetch(`${this._baseUrl}/notes`, {
+  async getNotes() {
+    const res = await fetch(`${this._baseUrl}/notes`, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
-    }).then(this._checkResponse)
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return this._checkResponse(res);
   }
 
-  addNote({ title, date, content }) {
-    return fetch(`${this._baseUrl}/notes`, {
+  async addNote({ title, date, content }) {
+    const res = await fetch(`${this._baseUrl}/notes`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      body: JSON.stringify({ title, date, content })
-    }).then(this._checkResponse)
+      body: JSON.stringify({ title, date, content }),
+    });
+    return this._checkResponse(res);
   }
 
-  deleteNote({ id }) {
-    return fetch(`${this._baseUrl}/notes/${id}`, {
+  async deleteNote({ id }) {
+    const res = await fetch(`${this._baseUrl}/notes/${id}`, {
       method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    }).then(this._checkResponse)
+    });
+    return this._checkResponse(res);
   }
 
-  getChats() {
-    return fetch(`${this._baseUrl}/chats`, {
+  async getChats() {
+    const res = await fetch(`${this._baseUrl}/chats`, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
-    }).then(this._checkResponse)
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return this._checkResponse(res);
   }
 
-  updateChat({ id, messages}) {
-    return fetch(`${this._baseUrl}/chats/${id}`, {
+  async updateChat({ id, messages }) {
+    const res = await fetch(`${this._baseUrl}/chats/${id}`, {
       method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      body: JSON.stringify({ messages })
-    }).then(this._checkResponse)
+      body: JSON.stringify({ messages }),
+    });
+    return this._checkResponse(res);
   }
 
-  addChat({ messages }) {
-    return fetch(`${this._baseUrl}/chats`, {
+  async addChat({ messages }) {
+    const res = await fetch(`${this._baseUrl}/chats`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      body: JSON.stringify({ messages })
-    }).then(this._checkResponse)
+      body: JSON.stringify({ messages }),
+    });
+    return this._checkResponse(res);
   }
 
-  deleteChat({ id }) {
-    return fetch(`${this._baseUrl}/chats/${id}`, {
+  async deleteChat({ id }) {
+    const res = await fetch(`${this._baseUrl}/chats/${id}`, {
       method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    }).then(this._checkResponse)
+    });
+    return this._checkResponse(res);
   }
 }
 
