@@ -18,7 +18,9 @@ const MainPage = () => {
 
   async function deleteChat(chatId) {
     await api.deleteChat({ id: chatId });
-    setChats((prev) => [prev.filter((item) => item._id !== chatId)]);
+    setChats((prev) => {
+      return prev.filter((item) => item._id !== chatId);
+    });
     navigate('/main'); // ????????????????????????????????
   }
 
@@ -28,8 +30,6 @@ const MainPage = () => {
       setChats(intianChats);
     })();
   }, []);
-
-  console.log('render main page');
 
   return (
     <div className=" bg-white">
