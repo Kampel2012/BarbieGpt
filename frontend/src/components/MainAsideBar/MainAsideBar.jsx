@@ -7,7 +7,7 @@ import plus from '../../assets/icon/plus.svg';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-const MainAsideBar = ({ chats }) => {
+const MainAsideBar = ({ chats, createChat }) => {
   const { signOut } = useContext(AuthContext);
 
   return (
@@ -32,7 +32,7 @@ const MainAsideBar = ({ chats }) => {
         {chats.length > 0 ? (
           <div className="my-2 flex flex-col gap-2">
             {chats.map((item) => (
-              <ProjectBadge key={item.id} name={item.name} id={item.id} />
+              <ProjectBadge key={item._id} name={item.title} id={item._id} />
             ))}
           </div>
         ) : (
@@ -40,6 +40,7 @@ const MainAsideBar = ({ chats }) => {
         )}
         <button
           type="button"
+          onClick={createChat}
           className="flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
         >
           <img src={plus} className="" />
@@ -62,6 +63,7 @@ const MainAsideBar = ({ chats }) => {
 
 MainAsideBar.propTypes = {
   chats: PropTypes.array,
+  createChat: PropTypes.func,
 };
 
 export default MainAsideBar;

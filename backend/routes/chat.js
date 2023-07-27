@@ -1,63 +1,63 @@
-import { Router } from 'express';
-import { celebrate, Joi } from 'celebrate';
+import { Router } from "express";
+import { celebrate, Joi } from "celebrate";
 import {
   getAllChats,
-  // getChatById,
   updateChatHistory,
   addChat,
   deleteChatById,
-} from '../controllers/chat.js';
+  getChatById,
+} from "../controllers/chat.js";
 
 const router = Router();
 
-router.get('/', getAllChats);
+router.get("/", getAllChats);
 
-// router.get(
-//   '/:chatId',
-//   celebrate({
-//     params: Joi.object().keys({
-//       chatId: Joi.string().length(24).hex(),
-//     }),
-//   }),
-//   getChatById,
-// );
+router.get(
+  "/:chatId",
+  celebrate({
+    params: Joi.object().keys({
+      chatId: Joi.string().length(24).hex(),
+    }),
+  }),
+  getChatById
+);
 
 router.patch(
-  '/:chatId',
+  "/:chatId",
   celebrate({
     params: Joi.object().keys({
       chatId: Joi.string().length(24).hex(),
     }),
     body: Joi.object().keys({
-      title: Joi.string().required(),
-      messages: Joi.array().required()
+      title: Joi.string(),
+      messages: Joi.array().required(),
     }),
   }),
   updateChatHistory
-)
+);
 
 router.post(
-  '/',
+  "/",
   celebrate({
     params: Joi.object().keys({
       _id: Joi.string().length(24).hex(),
     }),
     body: Joi.object().keys({
       title: Joi.string().required(),
-      messages: Joi.array()
+      messages: Joi.array(),
     }),
   }),
-  addChat,
+  addChat
 );
 
 router.delete(
-  '/:chatId',
+  "/:chatId",
   celebrate({
     params: Joi.object().keys({
       chatId: Joi.string().length(24).hex(),
     }),
   }),
-  deleteChatById,
+  deleteChatById
 );
 
 export default router;

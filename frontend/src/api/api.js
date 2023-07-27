@@ -1,32 +1,118 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
+  constructor({ baseUrl }) {
+    this._baseUrl = baseUrl;
   }
 
   _checkResponse(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
   }
 
-  async register({ email, password }) {
-    const res = await fetch(`${this._baseUrl}/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+  async _request(url, options) {
+    const res = await fetch(url, options);
     return this._checkResponse(res);
   }
 
-  async authorize({ email, password }) {
-    const res = await fetch(`${this._baseUrl}/signin`, {
+  async register({ email, password }) {
+    return this._request(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
-    return this._checkResponse(res);
+  }
+
+  async authorize({ email, password }) {
+    return this._request(`${this._baseUrl}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  }
+
+  async getNotes() {
+    return this._request(`${this._baseUrl}/notes`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
+  }
+
+  async addNote({ title, date, content }) {
+    return this._request(`${this._baseUrl}/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+      body: JSON.stringify({ title, date, content }),
+    });
+  }
+
+  async deleteNote({ id }) {
+    return this._request(`${this._baseUrl}/notes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
+  }
+
+  async getChats() {
+    return this._request(`${this._baseUrl}/chats`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
+  }
+
+  async getChatById(id) {
+    return this._request(`${this._baseUrl}/chats/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
+  }
+
+  async updateChat({ id, messages }) {
+    return this._request(`${this._baseUrl}/chats/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+      body: JSON.stringify({ messages }),
+    });
+  }
+
+  async addChat({ title, messages }) {
+    return this._request(`${this._baseUrl}/chats`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+      body: JSON.stringify({ title, messages }),
+    });
+  }
+
+  async deleteChat({ id }) {
+    return this._request(`${this._baseUrl}/chats/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
   }
 
   // ? нужны ли эти функции
@@ -50,86 +136,6 @@ class Api {
   //     }
   //   }).then(this._checkResponse)
   // }
-
-  async getNotes() {
-    const res = await fetch(`${this._baseUrl}/notes`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return this._checkResponse(res);
-  }
-
-  async addNote({ title, date, content }) {
-    const res = await fetch(`${this._baseUrl}/notes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ title, date, content }),
-    });
-    return this._checkResponse(res);
-  }
-
-  async deleteNote({ id }) {
-    const res = await fetch(`${this._baseUrl}/notes/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return this._checkResponse(res);
-  }
-
-  async getChats() {
-    const res = await fetch(`${this._baseUrl}/chats`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return this._checkResponse(res);
-  }
-
-  async updateChat({ id, messages }) {
-    const res = await fetch(`${this._baseUrl}/chats/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ messages }),
-    });
-    return this._checkResponse(res);
-  }
-
-  async addChat({ messages }) {
-    const res = await fetch(`${this._baseUrl}/chats`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ messages }),
-    });
-    return this._checkResponse(res);
-  }
-
-  async deleteChat({ id }) {
-    const res = await fetch(`${this._baseUrl}/chats/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return this._checkResponse(res);
-  }
 }
 
 const api = new Api({

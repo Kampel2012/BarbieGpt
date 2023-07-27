@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ProjectBadge = ({ name, id }) => {
   const { chatId } = useParams();
-  const isActive = parseInt(chatId) === id;
+  const isActive = chatId === id;
   return (
     <Link
       to={`/main/${id}`}
@@ -18,7 +18,7 @@ const ProjectBadge = ({ name, id }) => {
 
 ProjectBadge.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ProjectBadge;

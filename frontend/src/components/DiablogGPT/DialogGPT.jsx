@@ -11,25 +11,24 @@ import MessageGPT from './MessageGPT';
 import TextInputGPT from './TextInputGPT';
 import VoiceInputGPT from './VoiceInputGPT';
 import EmptyDialogMessage from './EmptyDialogMessage';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
+import api from '../../api/api';
 
 const DialogGPT = () => {
-  const params = useParams();
+  const { chatId } = useParams();
   //TODO делаем запрос на сервер и получаем ответ data => {name: string, messages: []}
   const [messages, setMessages] = useState([]);
   /*   const dictionary = getDictionary();
   const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
-  const navigate = useNavigate();
+  const deleteChat = useOutletContext();
 
   useEffect(() => {
-    localStorage.getItem('chats') !== null &&
-      setMessages(
-        JSON.parse(localStorage.getItem('chats')).find(
-          (i) => i.id === parseInt(params.chatId)
-        ).messages
-      );
-  }, [params]);
+    (async () => {
+      const chat = await api.getChatById(chatId);
+      setMessages(chat.messages);
+    })();
+  }, [chatId]);
 
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
@@ -97,17 +96,11 @@ const DialogGPT = () => {
       const gptResponse = await getGptResponse([...messages, ...newMessages]);
       console.log('Ответ от GPT:', gptResponse);
       newMessages.push({ role: 'assistant', content: gptResponse });
-      localStorage.setItem(
-        'chats',
-        JSON.stringify(
-          JSON.parse(localStorage.getItem('chats')).map((item) =>
-            item.id === parseInt(params.chatId)
-              ? { ...item, messages: [...messages, ...newMessages] }
-              : item
-          )
-        )
-      );
-      setMessages((prev) => [...prev, ...newMessages]);
+      const resUpdateChat = await api.updateChat({
+        id: chatId,
+        messages: [...messages, ...newMessages],
+      });
+      setMessages(resUpdateChat.messages);
       return gptResponse;
     } catch (error) {
       console.log(error);
@@ -116,25 +109,25 @@ const DialogGPT = () => {
     }
   }
 
-  function clearStory() {
-    console.log('Чистка истории сообщений');
-    setMessages([]);
+  /*   async function clearStory() {
+    await api.deleteChat({ id: chatId });
     navigate('/main');
-    localStorage.setItem(
-      'chats',
-      JSON.stringify(
-        JSON.parse(localStorage.getItem('chats')).filter(
-          (i) => i.id !== parseInt(params.chatId)
-        )
-      )
-    );
-  }
+  } */
+
+  const messageLoading = (
+    <MessageGPT
+      item={{
+        role: 'assistant',
+        content: 'Chatty AI обрабатывает запрос...',
+      }}
+    />
+  );
 
   return (
     <div className="flex-grow bg-white py-6 px-8 ">
       <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
         <h2 className="text-2xl font-semibold">Лекции по матану</h2>
-        <button type="button" onClick={clearStory}>
+        <button type="button" onClick={() => deleteChat(chatId)}>
           <img src={trash} alt="Очистить историю сообщений" />
         </button>
       </div>
@@ -145,17 +138,12 @@ const DialogGPT = () => {
         <div className="h-full">
           {messages.length > 0 ? (
             messages.map((item, i) => <MessageGPT key={i} item={item} />)
+          ) : isLoading ? (
+            messageLoading
           ) : (
             <EmptyDialogMessage />
           )}
-          {isLoading && (
-            <MessageGPT
-              item={{
-                role: 'assistant',
-                content: 'Chatty AI обрабатывает запрос...',
-              }}
-            />
-          )}
+          {messages.length > 0 && isLoading && messageLoading}
         </div>
       </div>
 

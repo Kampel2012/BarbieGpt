@@ -39,9 +39,9 @@ const TextInputGPT = ({ isLoading, askGPT, sendAudioFile }) => {
 };
 
 TextInputGPT.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  askGPT: PropTypes.func.isRequired,
-  sendAudioFile: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  askGPT: PropTypes.func,
+  sendAudioFile: PropTypes.func,
 };
 
 export default TextInputGPT;

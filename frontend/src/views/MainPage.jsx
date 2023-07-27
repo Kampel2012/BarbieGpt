@@ -1,45 +1,43 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
 import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
+import api from '../api/api';
+import { useEffect, useState } from 'react';
 
 const MainPage = () => {
-  const params = useParams();
+  const { chatId } = useParams();
+  const [chats, setChats] = useState([]);
+  const navigate = useNavigate();
 
-  const chats = [
-    {
-      id: 123,
-      messages: [
-        { role: 'user', content: 'Расскажи сказку' },
-        { role: 'assistant', content: 'Сам себе рассказывай' },
-      ],
-      name: 'Лекции по матану',
-    },
-    {
-      id: 22,
-      messages: [
-        { role: 'user', content: 'Посчитай пример' },
-        { role: 'assistant', content: 'Сам себе считай' },
-      ],
-      name: 'Личный блог',
-    },
-  ];
-
-  function test() {
-    //! Убрать после тестов как и кнопку внизу
-    localStorage.setItem('chats', JSON.stringify(chats));
+  async function createChat() {
+    const title = prompt('Введите название чата');
+    const newChat = await api.addChat({ title });
+    setChats((prev) => [...prev, newChat]);
   }
+
+  async function deleteChat(chatId) {
+    await api.deleteChat({ id: chatId });
+    setChats((prev) => [prev.filter((item) => item._id !== chatId)]);
+    navigate('/main'); // ????????????????????????????????
+  }
+
+  useEffect(() => {
+    (async () => {
+      const intianChats = await api.getChats();
+      setChats(intianChats);
+    })();
+  }, []);
+
+  console.log('render main page');
 
   return (
     <div className=" bg-white">
       <div className="flex justify-between">
-        <MainAsideBar chats={chats} />
-        {params.chatId ? <Outlet /> : <DialogGPTempty />}
+        <MainAsideBar chats={chats} createChat={createChat} />
+        {chatId ? <Outlet context={deleteChat} /> : <DialogGPTempty />}
         <NotificationsList />
       </div>
-      <button type="button" onClick={test}>
-        reset
-      </button>
     </div>
   );
 };

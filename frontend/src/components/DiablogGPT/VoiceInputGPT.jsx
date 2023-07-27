@@ -35,10 +35,10 @@ const VoiceInputGPT = ({
 };
 
 VoiceInputGPT.propTypes = {
-  startRecording: PropTypes.func.isRequired,
-  stopRecording: PropTypes.func.isRequired,
-  isRecording: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  startRecording: PropTypes.func,
+  stopRecording: PropTypes.func,
+  isRecording: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default VoiceInputGPT;
