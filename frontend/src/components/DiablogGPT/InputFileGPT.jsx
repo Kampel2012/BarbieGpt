@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import attachments from '../../assets/icon/attachments.svg';
 
 const InputFileGPT = ({ askGPT, sendAudioFile, isLoading }) => {
-  const allowedFormats =
-    '.txt, audio/wav, audio/mp3, audio/ogg, audio/flac, audio/mpeg,';
+  const allowedFormats = '.txt, audio/wav, audio/mp3, audio/mpeg,';
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -20,7 +19,7 @@ const InputFileGPT = ({ askGPT, sendAudioFile, isLoading }) => {
       askGPT(text);
     } else {
       alert(
-        'Неверный формат файла. Пожалуйста, выберите .txt, .wav, .mp3, .ogg или .flac файл.'
+        'Неверный формат файла. Пожалуйста, выберите .txt, .wav, .mp3, или .mpeg файл.'
       );
     }
   };
