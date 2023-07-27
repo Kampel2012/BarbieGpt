@@ -1,23 +1,44 @@
 import PropTypes from 'prop-types';
 import mic from '../../assets/icon/mic.svg';
+import record from '../../assets/icon/record.svg';
 
-const VoiceInputGPT = ({ startRecording, stopRecording }) => {
+const VoiceInputGPT = ({
+  startRecording,
+  stopRecording,
+  isLoading,
+  isRecording,
+}) => {
   return (
-    <button
-      type="button"
-      onMouseDown={startRecording}
-      onMouseUp={stopRecording}
-      className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold active:bg-red-400"
-    >
-      {'Начать диктовку'}
-      <img src={mic} alt="Голосовой ввод" className="ml-2" />
-    </button>
+    <>
+      {isRecording ? (
+        <button
+          type="button"
+          onClick={stopRecording}
+          className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
+        >
+          {'Закончить диктовку'}
+          <img src={record} alt="Голосовой ввод закончить" className="ml-2" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={startRecording}
+          disabled={isLoading}
+          className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold "
+        >
+          {'Начать диктовку'}
+          <img src={mic} alt="Голосовой ввод начать" className="ml-2" />
+        </button>
+      )}
+    </>
   );
 };
 
 VoiceInputGPT.propTypes = {
   startRecording: PropTypes.func.isRequired,
   stopRecording: PropTypes.func.isRequired,
+  isRecording: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default VoiceInputGPT;
