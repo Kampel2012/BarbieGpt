@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ThemeSwitcher from '../ThemeSwitcher';
+import LanguageSwitcher from '../LanguageSwitcher';
 import signout from '../../assets/icon/signout.svg';
 import EmptyProject from './EmptyProject';
 import ProjectBadge from './ProjectBadge';
@@ -46,7 +46,7 @@ const MainAsideBar = ({ chats }) => {
         <button type="button" className="mb-4 px-3 py-2 flex gap-2">
           <img src={signout} alt="Иконка выхода" /> Выход
         </button>
-        <ThemeSwitcher />
+        <LanguageSwitcher />
       </div>
     </div>
   );
