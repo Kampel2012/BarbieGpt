@@ -10,7 +10,7 @@ const TextInputGPT = () => {
       />
       {/* <input type="file" /> */}
       <button className="bg-seagreen py-3 px-3">
-        <img src={sendicon} />
+        <img src={sendicon} alt="Отправить запрос" />
       </button>
     </div>
   );

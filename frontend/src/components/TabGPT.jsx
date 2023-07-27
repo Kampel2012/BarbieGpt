@@ -4,6 +4,7 @@ import { getDictionary } from '../utils/dictionary';
 import { LanguageContext } from '../context/LanguageContext';
 import { makeNotification } from '../utils/notifications';
 
+//! Компонент не задействован / оставлен как образец, удалю позже
 function TabGPT() {
   let mediaRecorder;
   let audioChunks = [];
