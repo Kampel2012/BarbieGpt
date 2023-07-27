@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import attachments from '../../assets/icon/attachments.svg';
 
 const InputFileGPT = ({ askGPT, sendAudioFile, isLoading }) => {
-  const allowedFormats = '.txt, audio/wav, audio/mp3, audio/mpeg,';
+  const allowedFormats = 'text/plain, audio/wav, audio/mp3, audio/mpeg,';
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-    if (file.size < 30000) return;
     const fileType = file.type;
+    console.log(fileType === 'text/plain' && file.name.endsWith('.txt'));
     if (fileType === 'text/plain' && file.name.endsWith('.txt')) {
       // Если выбран .txt файл, выполнить askGPT
       const text = await readFileAsText(file);
       askGPT(text);
     } else if (allowedFormats.includes(fileType)) {
+      if (file.size < 10000) return;
       // Если выбран аудиофайл, выполнить sendAudioFile
       const text = await sendAudioFile(file);
       askGPT(text);
