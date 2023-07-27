@@ -63,7 +63,6 @@ const DialogGPT = () => {
   }, [isBusy]);
 
   function handleDataAvailable(e) {
-    console.log('устанавливаем чанки');
     setAudioChunks((prevChunks) => [...prevChunks, e.data]);
     setIsBusy(false);
   }
