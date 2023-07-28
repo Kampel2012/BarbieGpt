@@ -4,11 +4,14 @@ import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
 import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
 import api from '../api/api';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../redux/slices/userSlice';
 
 const MainPage = () => {
   const { chatId } = useParams();
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function createChat() {
     const title = prompt('Введите название чата');
@@ -28,8 +31,10 @@ const MainPage = () => {
     (async () => {
       const intianChats = await api.getChats();
       setChats(intianChats);
+      const user = await api.getMyProfile();
+      dispatch(setCurrentUser(user));
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className=" bg-white">

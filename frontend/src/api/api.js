@@ -115,17 +115,17 @@ class Api {
     });
   }
 
-  // ? нужны ли эти функции
+  async getMyProfile() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
+      },
+    });
+  }
 
-  // getMyProfile() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": `Bearer ${localStorage.getItem('token')}`
-  //     }
-  //   }).then(this._checkResponse)
-  // }
+  // ? нужны ли эти функции
 
   // getProfile({ id }) {
   //   return fetch(`${this._baseUrl}/users/${id}`, {

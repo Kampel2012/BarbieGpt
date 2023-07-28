@@ -6,9 +6,11 @@ import ProjectBadge from './ProjectBadge';
 import plus from '../../assets/icon/plus.svg';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { useSelector } from 'react-redux';
 
 const MainAsideBar = ({ chats, createChat }) => {
   const { signOut } = useContext(AuthContext);
+  const { email } = useSelector((state) => state.user.currentUser);
 
   return (
     <div className="p-6 max-w-[280px] bg-bgBlue flex flex-col justify-between min-h-screen">
@@ -17,7 +19,7 @@ const MainAsideBar = ({ chats, createChat }) => {
         <div className="flex items-center gap-x-2 px-3 pt-10 border-b pb-4 border-secondary border-opacity-30">
           <div className="bg-btnIconUser w-14 h-12 bg-no-repeat bg-center basis-6 shrink-0" />
           <p className="overflow-hidden whitespace-nowrap truncate text-lg leading-snug font-semibold">
-            testemailforyou@gmail.com
+            {email}
           </p>
         </div>
         <div className="mt-6 border-b  border-secondary border-opacity-30">
