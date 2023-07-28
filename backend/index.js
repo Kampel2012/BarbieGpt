@@ -9,6 +9,8 @@ import routes from "./routes/index.js";
 import { NotFoundError } from "./errors/index.js";
 import handleError from "./middlewares/error.js";
 // import { requestLogger, errorLogger } from './middlewares/logger.js';
+import { fileURLToPath } from "url";
+import path from "path";
 
 const { PORT = 3000, DB_URL = "mongodb://127.0.0.1/chattyaidb" } = process.env;
 
@@ -21,7 +23,13 @@ const limiter = rateLimit({
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const staticFolderPath = path.join(__dirname, "dist");
+
 mongoose.connect(DB_URL, { useNewUrlParser: true });
+
+app.use(express.static(staticFolderPath));
 
 app.use(helmet());
 

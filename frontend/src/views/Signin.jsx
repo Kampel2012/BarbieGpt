@@ -86,7 +86,7 @@ const Signin = () => {
             <div className="flex-1 h-0.5 bg-secondary bg-opacity-30"></div>
           </div>
           <Link
-            to={'/signup'}
+            to={'/sign-up'}
             type="button"
             className="text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
           >
