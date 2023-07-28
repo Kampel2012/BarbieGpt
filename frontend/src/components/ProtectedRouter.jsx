@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 const ProtectedRoute = ({ element: Component, ...props }) => {
   const { isAuth } = useContext(AuthContext);
   return (
-    <>{isAuth ? <Component {...props} /> : <Navigate to="/signin" replace />}</>
+    <>{isAuth ? <Component {...props} /> : <Navigate to="/sign-in" replace />}</>
   );
 };
 

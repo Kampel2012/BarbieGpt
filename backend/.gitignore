@@ -19,3 +19,6 @@ db
 
 # EnvironmentFile
 .env
+
+# Build directory
+dist

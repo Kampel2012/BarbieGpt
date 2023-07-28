@@ -23,7 +23,7 @@ const PromoPage = () => {
           </p>
           <div className="mx-auto max-w-max pb-20">
             <Link
-              to={'/signin'}
+              to={'/sign-in'}
               type="button"
               className="flex bg-seagreen text-lg px-8 py-4 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold"
             >
