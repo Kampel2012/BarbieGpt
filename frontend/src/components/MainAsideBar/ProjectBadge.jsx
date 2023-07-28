@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const ProjectBadge = ({ name, id }) => {
-  const currentChat = useSelector((state) => state.currentChat.currentChat);
+  const currentChat = useSelector((state) => state.chat.currentChat);
   const isActive = currentChat._id === id;
   return (
     <Link

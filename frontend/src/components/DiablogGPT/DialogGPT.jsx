@@ -13,7 +13,7 @@ import VoiceInputGPT from './VoiceInputGPT';
 import EmptyDialogMessage from './EmptyDialogMessage';
 import { useOutletContext, useParams } from 'react-router-dom';
 import api from '../../api/api';
-import { setCurrentChat } from '../../redux/slices/currentChatSlice';
+import { setCurrentChat } from '../../redux/slices/chatSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -25,7 +25,7 @@ const DialogGPT = () => {
   const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
   const deleteChat = useOutletContext();
-  const { title } = useSelector((state) => state.currentChat.currentChat);
+  const { title } = useSelector((state) => state.chat.currentChat);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

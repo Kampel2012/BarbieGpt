@@ -1,20 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentChat: [],
+  currentChat: {},
+  allChats: [],
   //status: 'loading', // loading | success | error
 };
 
-export const currentChatSlice = createSlice({
+export const chatSlice = createSlice({
   name: 'currentChat',
   initialState,
   reducers: {
     setCurrentChat: (state, action) => {
       state.currentChat = action.payload;
     },
+    setallChats: (state, action) => {
+      state.allChats = action.payload;
+    },
   },
 });
 
-export const { setCurrentChat } = currentChatSlice.actions;
+export const { setCurrentChat, setallChats } = chatSlice.actions;
 
-export default currentChatSlice.reducer;
+export default chatSlice.reducer;

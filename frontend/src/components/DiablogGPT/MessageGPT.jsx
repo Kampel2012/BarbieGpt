@@ -23,7 +23,7 @@ function MessageGPT({ item }) {
       }`}
     >
       <div className="flex justify-between">
-        <p className="text-sm px-4 text-secondary">25 июля</p>
+        <p className="text-sm px-4 text-secondary">{Date.now()}</p>
         {authorElem}
       </div>
       <p className="text-primary pl-8 pr-16 font-medium text-sm leading-snug pt-4">

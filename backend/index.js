@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
+import cors from "cors";
 import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 import { errors } from "celebrate";
@@ -30,7 +31,7 @@ app.use(express.json());
 
 // app.use(requestLogger);
 
-const allowedCors = ["http://127.0.0.1:5173", "http://localhost:5173"];
+/* const allowedCors = ["http://127.0.0.1:5173", "http://localhost:5173"];
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -53,7 +54,9 @@ app.use((req, res, next) => {
   }
 
   return next();
-});
+}); */
+
+app.use(cors({ origin: true, credentials: true }));
 
 app.use(routes);
 
