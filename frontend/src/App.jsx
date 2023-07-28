@@ -6,7 +6,9 @@ import { useState } from 'react';
 
 function App() {
   const element = useRoutes(routes);
-  const [language, setLanguage] = useState('RU');
+  const [language, setLanguage] = useState(
+    localStorage.getItem('LanguageChattyAI') || 'RU'
+  );
   const [isAuth, setIsAuth] = useState(
     Boolean(localStorage.getItem('CHATTYTOKEN'))
   );
@@ -15,9 +17,16 @@ function App() {
     setIsAuth(false);
   }
 
+  function setLanguageForAll(newValue) {
+    localStorage.setItem('LanguageChattyAI', newValue);
+    setLanguage(newValue);
+  }
+
   return (
     <>
-      <LanguageContext.Provider value={{ language, setLanguage }}>
+      <LanguageContext.Provider
+        value={{ language, setLanguage: setLanguageForAll }}
+      >
         <AuthContext.Provider value={{ isAuth, setIsAuth, signOut }}>
           {element}
         </AuthContext.Provider>
