@@ -21,11 +21,11 @@ const routes = [
     element: <PromoPage />,
   },
   {
-    path: '/signin',
+    path: '/sign-in',
     element: <Signin />,
   },
   {
-    path: '/signup',
+    path: '/sign-up',
     element: <Signup />,
   },
 ];

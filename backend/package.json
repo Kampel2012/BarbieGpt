@@ -30,6 +30,7 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.0",
+    "path": "^0.12.7",
     "validator": "^13.9.0"
   }
 }
