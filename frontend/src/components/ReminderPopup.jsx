@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import closeBtn from '../assets/close-button.svg';
 
 const ReminderPopup = ({ show, onClose, onSubmit }) => {
   const [reminderTitle, setReminderTitle] = useState('');
@@ -15,50 +16,56 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${
-        show ? 'block' : 'hidden'
-      } bg-opacity-75 bg-black`}
+      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${show ? 'block' : 'hidden'
+        } bg-opacity-50 bg-black`}
     >
-      <div className="bg-white p-4 rounded-md shadow-md">
-        <h2 className="text-xl font-bold mb-4">Новое напоминание</h2>
+      <div className="relative bg-white w-[480px] px-[24px] py-[32px] rounded-2xl shadow-md">
+        <button
+          type="button"
+          className="absolute top-[40px] right-[24px]"
+          onClick={onClose}
+        >
+          <img
+          alt='Закрыть'
+          src={closeBtn}
+          />
+        </button>
+        <h2 className="text-neutral-800 text-3xl font-bold leading-10 mb-1">Создать напоминание</h2>
+        <p className="text-neutral-400 text-sm font-normal leading-tight">Напоминания сохраняются в течение сессии вкладки браузера</p>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium">Название</label>
             <input
               type="text"
-              className="w-full border-gray-300 rounded-md mt-1 p-2"
+              className="w-full mt-[24px] px-4 pt-3 pb-10 rounded-xl border border-neutral-300
+              text-neutral-500 text-sm font-normal leading-tight"
+              placeholder='Напоминание'
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
               required
             />
+            <p className='text-right text-neutral-400 text-sm font-normal leading-tight mt-[-28px] mr-[12px]'>0/100</p>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium">
-              Количество минут
+            <label className="text-neutral-800 text-sm font-normal leading-tight">
+              Через сколько минут напомнить
             </label>
             <input
               type="number"
-              className="w-full border-gray-300 rounded-md mt-1 p-2"
+              className="mt-[8px] w-full px-4 py-3.5 rounded-xl border border-neutral-300
+              text-neutral-500 text-base font-medium leading-snug"
+              placeholder='Минуты'
               value={minutes}
               onChange={(e) => setMinutes(e.target.value)}
               required
             />
           </div>
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="mr-2 px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:ring-gray-200"
-              onClick={onClose}
-            >
-              Отмена
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
-            >
-              Создать
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
+            text-neutral-800 text-lg font-medium leading-normal"
+          >
+            Создать
+          </button>
         </form>
       </div>
     </div>
