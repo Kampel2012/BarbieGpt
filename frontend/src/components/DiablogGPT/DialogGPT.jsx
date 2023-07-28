@@ -123,7 +123,7 @@ const DialogGPT = () => {
   );
 
   return (
-    <div className="flex-grow bg-white py-6 px-8 ">
+    <div className="flex-grow bg-white py-6 px-8">
       <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
         <h2 className="text-2xl font-semibold">{title}</h2>
         <button type="button" onClick={() => deleteChat(chatId)}>

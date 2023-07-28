@@ -8,6 +8,7 @@ import { getDictionary } from '../utils/dictionary';
 import api from '../api/api';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../redux/slices/userSlice';
+import CreateNotificationPopup from '../components/Popups/CreateNotificationPopup';
 
 const MainPage = () => {
   const { language } = useContext(LanguageContext);
@@ -41,12 +42,14 @@ const MainPage = () => {
   }, [dispatch]);
 
   return (
-    <div className=" bg-white">
+    <div className="relative bg-white">
       <div className="flex justify-between">
         <MainAsideBar chats={chats} createChat={createChat} />
         {chatId ? <Outlet context={deleteChat} /> : <DialogGPTempty />}
         <NotificationsList />
+        
       </div>
+      <CreateNotificationPopup />
     </div>
   );
 };
