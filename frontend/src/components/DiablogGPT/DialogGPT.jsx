@@ -1,7 +1,4 @@
 import { useEffect } from 'react';
-/* import { LanguageContext } from '../../context/LanguageContext';
-import { getDictionary } from '../../utils/dictionary';
-import { useContext } from 'react'; */
 import { getGptResponse, sendAudioFile } from '../../api/apiOpenAI';
 import DownloadTextFile from '../DownloadTextFile';
 import { useState } from 'react';
@@ -21,8 +18,6 @@ const DialogGPT = () => {
   const { chatId } = useParams();
   const [messages, setMessages] = useState([]);
   const dispatch = useDispatch();
-  /*   const dictionary = getDictionary();
-  const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
   const deleteChat = useOutletContext();
   const { title } = useSelector((state) => state.chat.currentChat);
