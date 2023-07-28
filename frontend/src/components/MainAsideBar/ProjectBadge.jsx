@@ -1,9 +1,10 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const ProjectBadge = ({ name, id }) => {
-  const { chatId } = useParams();
-  const isActive = chatId === id;
+  const currentChat = useSelector((state) => state.currentChat.currentChat);
+  const isActive = currentChat._id === id;
   return (
     <Link
       to={`/main/${id}`}

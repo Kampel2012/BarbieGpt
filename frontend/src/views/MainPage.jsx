@@ -1,9 +1,9 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
 import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
 import api from '../api/api';
-import { useEffect, useState } from 'react';
 
 const MainPage = () => {
   const { chatId } = useParams();
