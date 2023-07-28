@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import closeBtn from '../assets/close-button.svg';
+import closeBtn from '../../assets/close-button.svg';
 
 const ReminderPopup = ({ show, onClose, onSubmit }) => {
   const [reminderTitle, setReminderTitle] = useState('');

@@ -8,7 +8,8 @@ import { getDictionary } from '../utils/dictionary';
 import api from '../api/api';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../redux/slices/userSlice';
-import ReminderPopup from '../components/ReminderPopup';
+import ReminderPopup from '../components/Popups/ReminderPopup';
+import CreateProjectPopup from '../components/Popups/CreateProjectPopup';
 
 const MainPage = () => {
   const { language } = useContext(LanguageContext);
@@ -47,9 +48,10 @@ const MainPage = () => {
         <MainAsideBar chats={chats} createChat={createChat} />
         {chatId ? <Outlet context={deleteChat} /> : <DialogGPTempty />}
         <NotificationsList />
-        
+
       </div>
-      <ReminderPopup show={true} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
+      <ReminderPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
+      <CreateProjectPopup show={true} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
     </div>
   );
 };
