@@ -1,10 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import mic from '../../assets/icon/mic.svg';
 import plus from '../../assets/icon/plus.svg';
 import Notification from './Notification';
 import styles from './NotificationsList.module.css';
 import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
+import { sendAudioFile, getGptResponse } from '../../api/apiOpenAI';
+import { makeNotification } from '../../utils/notifications';
 
 const NotificationsList = () => {
   const scrollStyle = styles.scrollbar;
