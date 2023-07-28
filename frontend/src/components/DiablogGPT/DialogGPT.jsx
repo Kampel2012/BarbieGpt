@@ -13,28 +13,32 @@ import VoiceInputGPT from './VoiceInputGPT';
 import EmptyDialogMessage from './EmptyDialogMessage';
 import { useOutletContext, useParams } from 'react-router-dom';
 import api from '../../api/api';
+import { setCurrentChat } from '../../redux/slices/currentChatSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const DialogGPT = () => {
   const { chatId } = useParams();
-  //TODO делаем запрос на сервер и получаем ответ data => {name: string, messages: []}
   const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
   /*   const dictionary = getDictionary();
   const language = useContext(LanguageContext); */
   const scrollStyle = styles.scrollbar;
   const deleteChat = useOutletContext();
-
-  useEffect(() => {
-    (async () => {
-      const chat = await api.getChatById(chatId);
-      setMessages(chat.messages);
-    })();
-  }, [chatId]);
-
+  const { title } = useSelector((state) => state.currentChat.currentChat);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const chat = await api.getChatById(chatId);
+      setMessages(chat.messages);
+      dispatch(setCurrentChat(chat));
+    })();
+  }, [chatId, dispatch]);
 
   async function startRecording() {
     try {
@@ -109,11 +113,6 @@ const DialogGPT = () => {
     }
   }
 
-  /*   async function clearStory() {
-    await api.deleteChat({ id: chatId });
-    navigate('/main');
-  } */
-
   const messageLoading = (
     <MessageGPT
       item={{
@@ -126,7 +125,7 @@ const DialogGPT = () => {
   return (
     <div className="flex-grow bg-white py-6 px-8 ">
       <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
-        <h2 className="text-2xl font-semibold">Лекции по матану</h2>
+        <h2 className="text-2xl font-semibold">{title}</h2>
         <button type="button" onClick={() => deleteChat(chatId)}>
           <img src={trash} alt="Очистить историю сообщений" />
         </button>
