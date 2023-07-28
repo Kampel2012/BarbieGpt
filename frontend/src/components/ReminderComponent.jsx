@@ -3,7 +3,7 @@ import { makeNotification } from '../utils/notifications';
 
 const ReminderComponent = () => {
   const [reminderText, setReminderText] = useState('');
-  const [reminderTime, setReminderTime] = useState('');
+  const [reminderTime, setReminderTime] = useState(0);
 
   const handleReminderSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +12,7 @@ const ReminderComponent = () => {
 
   return (
     <div>
-      <h1 className="text-xl my-5 text-red-100">Напоминания</h1>
+      <h1 className="text-xl my-5 text-red-100">Создание напоминания</h1>
       <form onSubmit={handleReminderSubmit} className="flex flex-wrap gap-2">
         <label className="flex flex-wrap gap-2">
           Текст напоминания:
