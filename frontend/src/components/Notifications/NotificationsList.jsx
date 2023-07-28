@@ -1,10 +1,15 @@
+import { useContext } from 'react';
 import mic from '../../assets/icon/mic.svg';
 import plus from '../../assets/icon/plus.svg';
 import Notification from './Notification';
 import styles from './NotificationsList.module.css';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 
 const NotificationsList = () => {
   const scrollStyle = styles.scrollbar;
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
 
   const notifications = [];
 
@@ -14,7 +19,7 @@ const NotificationsList = () => {
     ) : (
       <div className="text-center flex flex-col grow justify-center">
         <h3 className="text-base font-semibold">
-          У вас пока не создано ни одного напоминания
+          {dictionary.noNotesTxt[language]}
         </h3>
       </div>
     );
@@ -23,7 +28,7 @@ const NotificationsList = () => {
     <div className="min-w-min border-l-2 border-secondary border-opacity-30 bg-white pt-4 px-6 ">
       <div className={`w-64 `}>
         <div className="flex justify-between mb-6 items-center">
-          <h2 className="font-semibold text-2xl">Напоминания</h2>
+          <h2 className="font-semibold text-2xl">{dictionary.notesTitle[language]}</h2>
           <div className="flex gap-2">
             <button>
               <img src={mic} alt="Голосовой ввод"></img>

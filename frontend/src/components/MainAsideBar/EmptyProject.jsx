@@ -1,9 +1,16 @@
+import { useContext } from 'react';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
+
+
 const EmptyProject = () => {
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
+
   return (
     <div className="mt-6 mb-3">
       <p className="text-primary text-sm mt-2">
-        У вас пока не создано ни одного проекта. Нажмите создать проект чтобы
-        приступить к работе
+        {dictionary.emptyProjectTxt[language]}
       </p>
     </div>
   );

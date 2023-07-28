@@ -1,17 +1,21 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
 import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
+import { LanguageContext } from '../context/LanguageContext';
+import { getDictionary } from '../utils/dictionary';
 import api from '../api/api';
 
 const MainPage = () => {
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
   const { chatId } = useParams();
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
   async function createChat() {
-    const title = prompt('Введите название чата');
+    const title = prompt(dictionary.createChatPopupTitle[language]);
     const newChat = await api.addChat({ title });
     setChats((prev) => [...prev, newChat]);
   }
