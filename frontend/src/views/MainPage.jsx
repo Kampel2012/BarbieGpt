@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../redux/slices/userSlice';
 import ReminderPopup from '../components/Popups/ReminderPopup';
 import CreateProjectPopup from '../components/Popups/CreateProjectPopup';
+import DeleteProjectPopup from '../components/Popups/DeleteProjectPopup';
 
 const MainPage = () => {
   const { language } = useContext(LanguageContext);
@@ -51,7 +52,8 @@ const MainPage = () => {
 
       </div>
       <ReminderPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
-      <CreateProjectPopup show={true} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
+      <CreateProjectPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
+      <DeleteProjectPopup show={true} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
     </div>
   );
 };
