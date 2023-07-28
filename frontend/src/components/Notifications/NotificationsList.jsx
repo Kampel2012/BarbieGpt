@@ -13,10 +13,7 @@ const NotificationsList = () => {
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
 
-  const [notifications, setNotifications] = useState([
-    'Поздравить родителей',
-    'Сказать подруге привет',
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
   const notificationsElems =
     notifications.length > 0 ? (
@@ -31,7 +28,14 @@ const NotificationsList = () => {
 
   function createTextNotification() {
     const text = prompt('Введите текст уведомления');
+    if (text <= 0) return;
+    const time = prompt('Введите количество секунд до уведомления');
+    if (time <= 0) return;
+    makeNotification(text, +time * 1000);
     setNotifications((prev) => [...prev, text]);
+    setTimeout(() => {
+      setNotifications((prev) => prev.filter((item) => item !== text));
+    }, +time * 1000);
   }
 
   let mediaRecorder;
@@ -66,25 +70,25 @@ const NotificationsList = () => {
         const gptResponse = await askGPT(
           `Преобразуй запрос в вид: Text: описание кратко, Time:  число в миллисекундах. ${transcriptionFromOpenAi}`
         );
-        let a = gptResponse.split('Time');
-        a = a.length > 1 ? a : a.split('\nTime');
-        if (a.length <= 1) {
-          console.warn('Ошибка неверный ответ от GPT'); //! сделать тут ошибку
+        let params = gptResponse.split('Time');
+        params = params.length > 1 ? params : params.split('\nTime');
+        if (params.length <= 1) {
+          console.warn('Ошибка неверный ответ от GPT'); //? сделать алерт?
           return;
         }
-        a = a.map((item, i) => {
+        params = params.map((item, i) => {
           if (i === 1) {
-            const b = item.replace(': ', '');
-            return parseInt(b);
+            const time = item.replace(': ', '');
+            return parseInt(time);
           }
           return item.replace('Text: ', '');
         });
-        console.log(a);
-        makeNotification(a[0], a[1]);
-        setNotifications((prev) => [...prev, a[0]]);
+        const [text, time] = params;
+        makeNotification(text, time);
+        setNotifications((prev) => [...prev, text]);
         setTimeout(() => {
-          setNotifications((prev) => prev.filter((item) => item !== a[0]));
-        }, a[1]);
+          setNotifications((prev) => prev.filter((item) => item !== text));
+        }, time);
       });
     }
   }
@@ -105,7 +109,9 @@ const NotificationsList = () => {
     <div className="min-w-min border-l-2 border-secondary border-opacity-30 bg-white pt-4 px-6 ">
       <div className={`w-64 `}>
         <div className="flex justify-between mb-6 items-center">
-          <h2 className="font-semibold text-2xl">{dictionary.notesTitle[language]}</h2>
+          <h2 className="font-semibold text-2xl">
+            {dictionary.notesTitle[language]}
+          </h2>
           <div className="flex gap-2">
             <button
               type="button"
