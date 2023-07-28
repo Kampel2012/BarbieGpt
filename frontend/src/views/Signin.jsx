@@ -43,11 +43,11 @@ const Signin = () => {
           <form className="text-left pt-6" onSubmit={handleSubmit}>
             <label>
               <p className="mb-2 text-secondary text-sm">
-                {dictionary.emailInputTitle[language]}
+                {dictionary.loginEmailInputTitle[language]}
               </p>
               <input
                 className="w-full border border-secondary px-4 py-4 rounded-xl placeholder:font-medium border-opacity-30 leading-snug"
-                placeholder="Электронная почта"
+                placeholder={dictionary.emailInputPlaceholder[language]}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required={true}
@@ -58,11 +58,11 @@ const Signin = () => {
             </label>
             <label>
               <p className="mb-2 text-secondary text-sm mt-4">
-                {dictionary.passwordInputTitle[language]}
+                {dictionary.loginPasswordInputTitle[language]}
               </p>
               <input
                 className="w-full border border-secondary px-4 py-4 rounded-xl placeholder:font-medium border-opacity-30 leading-snug"
-                placeholder="Пароль"
+                placeholder={dictionary.passwordInputPlaceholder[language]}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -81,7 +81,7 @@ const Signin = () => {
           <div className="flex items-center my-6">
             <div className="flex-1 h-0.5 bg-secondary bg-opacity-30"></div>
             <div className="px-4 text-secondary leading-snug">
-              {dictionary.noAccountTxt[language]}
+              {dictionary.noAccTxt[language]}
             </div>
             <div className="flex-1 h-0.5 bg-secondary bg-opacity-30"></div>
           </div>

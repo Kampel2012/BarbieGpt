@@ -28,11 +28,11 @@ export function getDictionary() {
       RU: 'Вход',
       EN: 'Entrance',
     },
-    emailInputTitle: {
+    loginEmailInputTitle: {
       RU: 'Введите ваш e-mail',
       EN: 'Enter your e-mail',
     },
-    passwordInputTitle: {
+    loginPasswordInputTitle: {
       RU: 'Введите пароль',
       EN: 'Enter the password',
     },
@@ -40,13 +40,103 @@ export function getDictionary() {
       RU: 'Войти',
       EN: 'Enter',
     },
-    noAccountTxt: {
+    noAccTxt: {
       RU: 'Нет аккаунта?',
       EN: 'No account?',
     },
     registerBtn: {
       RU: 'Зарегистрироваться',
       EN: 'Register',
-    }
+    },
+    registerTitle: {
+      RU: 'Регистрация',
+      EN: 'Registration',
+    },
+    registerEmailInputTitle: {
+      RU: 'Введите ваш e-mail для регистрации',
+      EN: 'Enter your e-mail for registration',
+    },
+    registerPasswordInputTitle: {
+      RU: 'Придумайте пароль (минимум 6 латинских букв и 2 цифры)',
+      EN: 'Come up with a password (at least 6 Latin letters and 2 digits)',
+    },
+    createAccBtn: {
+      RU: 'Создать аккаунт',
+      EN: 'Create an account',
+    },
+    registerTxt: {
+      RU: 'Регистрируясь, вы соглашаетесь с условиями обслуживания и политикой конфиденциальности компании Chatty AI',
+      EN: "By registering, you agree to Chatty AI's Terms of Service and Privacy Policy",
+    },
+    haveAccTxt: {
+      RU: 'Уже есть аккаунт?',
+      EN: 'Already have an account?',
+    },
+    createChatPopupTitle: {
+      RU: 'Введите название чата',
+      EN: 'Enter the name of the chat',
+    },
+    emailInputPlaceholder: {
+      RU: 'Электронная почта',
+      EN: 'Email',
+    },
+    passwordInputPlaceholder: {
+      RU: 'Пароль',
+      EN: 'Password',
+    },
+    mainAsideBarTitle: {
+      RU: 'Чат с ботом',
+      EN: 'Chat with a bot',
+    },
+    emptyProjectTxt: {
+      RU: 'У вас пока не создано ни одного проекта. Нажмите создать проект чтобы приступить к работе',
+      EN: "You haven't created a single project yet. Click create project to get started",
+    },
+    createProjectBtn: {
+      RU: 'Создать проект',
+      EN: 'Create a project',
+    },
+    exitBtn: {
+      RU: 'Выход',
+      EN: 'Exit',
+    },
+    dialogTitle: {
+      RU: 'Чат с ChattyAI',
+      EN: 'Chat with ChattyAI',
+    },
+    emptyDialogTitle: {
+      RU: 'У вас пока нет ни одного сообщения',
+      EN: "You don't have any messages yet",
+    },
+    emptyDialogSubitle: {
+      RU: 'Начните диалог с чат-ботом, запишите или загрузите аудио',
+      EN: 'Start a conversation with a chatbot, record or upload audio',
+    },
+    dialogInputPlaceholder: {
+      RU: 'Задайте вопрос нейросети',
+      EN: 'Ask a neural network question',
+    },
+    recordingBtn: {
+      start: {
+        RU: 'Начать диктовку',
+        EN: 'Start dictation',
+      },
+      stop: {
+        RU: 'Закончить диктовку',
+        EN: 'Finish dictation',
+      }
+    },
+    notesTitle: {
+      RU: 'Напоминания',
+      EN: 'Notifications',
+    },
+    noNotesTxt: {
+      RU: 'У вас пока не создано ни одного напоминания',
+      EN: "You haven't created any reminders yet",
+    },
+    // name: {
+    //   RU: '',
+    //   EN: '',
+    // },
   };
 }

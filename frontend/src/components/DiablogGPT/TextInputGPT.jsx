@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 import sendicon from '../../assets/icon/sendicon.svg';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import InputFileGPT from './InputFileGPT';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 
 const TextInputGPT = ({ isLoading, askGPT, sendAudioFile }) => {
   const [text, setText] = useState('');
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
 
   function handlerSubmitText(e) {
     e.preventDefault();
@@ -21,7 +25,7 @@ const TextInputGPT = ({ isLoading, askGPT, sendAudioFile }) => {
         <input
           type="text"
           onChange={(e) => setText(e.target.value)}
-          placeholder="Задайте вопрос нейросети"
+          placeholder={dictionary.dialogInputPlaceholder[language]}
           className="px-4 py-3 leading-snug focus:outline-none grow font-semibold"
           value={text}
         />
