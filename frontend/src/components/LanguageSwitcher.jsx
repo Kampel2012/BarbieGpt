@@ -12,6 +12,7 @@ const LanguageSwitcher = () => {
   return (
     <div className="flex items-center h-12 p-1 border rounded-xl font-medium max-w-max">
       <button
+        type="button"
         className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 ${
           language === 'EN' ? 'bg-gray-200' : 'bg-inherit'
         }`}
@@ -21,6 +22,7 @@ const LanguageSwitcher = () => {
         Eng
       </button>
       <button
+        type="button"
         className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 ${
           language === 'RU' ? 'bg-gray-200' : 'bg-inherit'
         }`}

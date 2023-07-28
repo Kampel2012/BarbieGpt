@@ -6,11 +6,11 @@ const Header = () => {
 
   return (
     <header className="h-20 border-b-2 shadow-sm border-tertiary">
-      <div
-        onClick={() => navigate('/')}
-        className="container flex flex-wrap items-center px-20 justify-between h-full hover:cursor-pointer"
-      >
-        <div className="bg-headerlogo w-[165px] h-10 bg-contain bg-no-repeat"></div>
+      <div className="container flex flex-wrap items-center px-20 justify-between h-full hover:cursor-pointer">
+        <div
+          className="bg-headerlogo w-[165px] h-10 bg-contain bg-no-repeat"
+          onClick={() => navigate('/')}
+        ></div>
         <div className="flex flex-wrap gap-6">
           <LanguageSwitcher />
           <button
