@@ -15,7 +15,7 @@ const PromoPage = () => {
       <Header />
       <div className="bg-bgFrame relative z-0">
         <div className="container min-h-[calc(100vh-80px)] text-center max-w-6xl">
-          <h1 className="text-6xl font-extrabold leading-tight max-w-6xl mx-auto text-primary mb-4 pt-52">
+          <h1 className="text-6xl font-extrabold leading-tight max-w-6xl mx-auto text-primary mb-8 pt-52">
             {dictionary.promoTitle[language]}
           </h1>
           <p className="text-secondary text-2xl max-w-2xl mx-auto mb-10 font-medium">
