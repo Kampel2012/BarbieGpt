@@ -21,6 +21,7 @@ export default {
         chatBlue: '#DAF6FF',
         chatGray: '#F4F4F4',
         bgBlue: '#EDFBFF',
+        btnActive: '#6BDCFF',
       },
       fontFamily: {
         sans: ['Mulish', 'sans-serif'],

@@ -20,7 +20,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
   };
 
   function minMax(text) {
-    const time = parseInt(text);
+    const time = parseInt(text) || 1;
     const currectTime = Math.max(1, Math.min(time, 1440));
     setMinutes(currectTime);
   }

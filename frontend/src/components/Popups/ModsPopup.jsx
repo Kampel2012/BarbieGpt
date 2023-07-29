@@ -6,10 +6,6 @@ import closeBtn from '../../assets/close-button.svg';
 const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
   const [selectedModeId, setSelectedModeId] = useState(1);
 
-  const handleModeSelect = (modeId) => {
-    setSelectedModeId(modeId);
-  };
-
   const onSubmitHandler = () => {
     onSubmit(selectedModeId);
   };
@@ -38,11 +34,14 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
             {modesData.map((mode) => (
               <div
                 key={mode.id}
-                className={`p-3 cursor-pointer rounded-xl broder border border-secondary border-opacity-30 min-h-[184px] hover:bg-activeBlue ${
-                  selectedModeId === mode.id &&
-                  'border-seagreen border-opacity-100'
+                className={`p-3 cursor-pointer rounded-xl border  min-h-[184px] hover:bg-activeBlue ${
+                  selectedModeId === mode.id
+                    ? 'border-seagreen border-opacity-100'
+                    : 'border-secondary border-opacity-30'
                 }`}
-                onClick={() => handleModeSelect(mode.id)}
+                onClick={() => {
+                  setSelectedModeId(mode.id);
+                }}
               >
                 <h3 className="font-bold pb-2">{mode.title}</h3>
                 <p className="text-secondary text-sm">{mode.description}</p>

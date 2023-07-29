@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import mic from '../../assets/icon/mic.svg';
-import plus from '../../assets/icon/plus.svg';
+import pen from '../../assets/icon/pen.svg';
 import Notification from './Notification';
 import styles from './NotificationsList.module.css';
 import { LanguageContext } from '../../context/LanguageContext';
@@ -19,10 +19,6 @@ const NotificationsList = () => {
   let audioChunks = [];
 
   function createTextNotification(text, time) {
-    /*     const text = prompt('Введите текст уведомления');
-    if (text <= 0) return;
-    const time = parseInt(prompt('Введите количество секунд до уведомления'));
-    if (time <= 0) return; */
     makeNotification(text, +time * 1000);
     setNotifications((prev) => [...prev, { text, time }]);
     setTimeout(() => {
@@ -128,12 +124,15 @@ const NotificationsList = () => {
               <img src={mic} alt="Голосовой ввод"></img>
             </button>
             <button type="button" onClick={() => setShowReminderPopup(true)}>
-              <img src={plus} alt="Текстовое добавление заметки"></img>
+              <img src={pen} alt="Текстовое добавление заметки"></img>
             </button>
           </div>
         </div>
+        <p className="text-secondary text-sm mb-3">
+          Напоминания сохраняются в течение сессии вкладки браузера
+        </p>
         <div
-          className={`flex flex-col gap-4 h-[calc(100vh-32px-32px-32px)] overflow-y-auto ${scrollStyle}`}
+          className={`flex flex-col gap-4 h-[calc(100vh-32px-32px-32px-40px)] overflow-y-auto ${scrollStyle}`}
         >
           {notificationsElems}
         </div>
