@@ -87,7 +87,7 @@ const NotificationsList = () => {
         });
         const [text, time] = params;
         makeNotification(text, time);
-        setNotifications((prev) => [...prev, { text, time }]);
+        setNotifications((prev) => [...prev, { text, time: time / 1000 }]);
         setTimeout(() => {
           setNotifications((prev) => prev.filter((item) => item.text !== text));
         }, time);
