@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { getModsGpt } from '../../utils/workingMods';
 import { useState } from 'react';
 import closeBtn from '../../assets/close-button.svg';
+import circle from '../../assets/icon/circle.svg';
+import activeCircle from '../../assets/icon/activeCircle.svg';
 
 const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
   const [selectedModeId, setSelectedModeId] = useState(1);
@@ -34,7 +36,7 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
             {modesData.map((mode) => (
               <div
                 key={mode.id}
-                className={`p-3 cursor-pointer rounded-xl border  min-h-[184px] hover:bg-activeBlue ${
+                className={`relative p-3 cursor-pointer rounded-xl border  min-h-[184px] hover:border-seagreen hover:border-opacity-100 ${
                   selectedModeId === mode.id
                     ? 'border-seagreen border-opacity-100'
                     : 'border-secondary border-opacity-30'
@@ -45,6 +47,7 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
               >
                 <h3 className="font-bold pb-2">{mode.title}</h3>
                 <p className="text-secondary text-sm">{mode.description}</p>
+                <img alt='Кружок' src={selectedModeId === mode.id ? activeCircle : circle} className='absolute top-4 right-4 first-letter' />
               </div>
             ))}
           </div>
