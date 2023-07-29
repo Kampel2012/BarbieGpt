@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import closeBtn from '../../assets/close-button.svg';
 
 const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
+  if (!show) return;
   const handleFormSubmit = (e) => {
     e.preventDefault();
     onSubmit();
@@ -31,14 +32,14 @@ const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
           <button
             type="submit"
             className="w-full px-6 py-4 rounded-xl border border-neutral-300 mb-2
-            text-neutral-800 text-lg font-medium leading-normal"
+            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
           >
             Удалить
           </button>
           <button
             type="button"
             className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-medium leading-normal"
+            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
             onClick={onClose}
           >
             Отменить

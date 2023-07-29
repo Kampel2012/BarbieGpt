@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import { getModsGpt } from '../../utils/workingMods';
+import { useState } from 'react';
 
-const ModsPopup = ({ isOpen, onClose, onSubmit, selectedModeId }) => {
+const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
+  const [selectedModeId, setSelectedModeId] = useState(1);
+
   const handleModeSelect = (modeId) => {
-    onSubmit(modeId);
+    setSelectedModeId(modeId);
+  };
+
+  const onSubmitHandler = () => {
+    onSubmit(selectedModeId);
   };
 
   const modesData = getModsGpt();
@@ -36,13 +43,13 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, selectedModeId }) => {
           </div>
           <div className="text-center mt-2">
             <button
-              onClick={onClose}
+              onClick={onPrev}
               className="mt-4 px-20 py-3 mr-3 font-semibold border border-secondary border-opacity-30 rounded-xl hover:bg-activeBlue"
             >
-              Закрыть
+              Назад
             </button>
             <button
-              onClick={() => handleModeSelect(null)}
+              onClick={onSubmitHandler}
               className="mt-4 px-20 py-3 bg-seagreen font-semibold border border-secondary border-opacity-30 rounded-xl hover:bg-activeBlue"
             >
               Создать
@@ -58,7 +65,6 @@ ModsPopup.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
-  selectedModeId: PropTypes.number,
 };
 
 export default ModsPopup;

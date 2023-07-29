@@ -7,32 +7,22 @@ import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
 import { sendAudioFile, getGptResponse } from '../../api/apiOpenAI';
 import { makeNotification } from '../../utils/notifications';
+import ReminderPopup from '../Popups/ReminderPopup';
 
 const NotificationsList = () => {
   const scrollStyle = styles.scrollbar;
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
-
   const [notifications, setNotifications] = useState([]);
+  const [showReminderPopup, setShowReminderPopup] = useState(false);
+  let mediaRecorder;
+  let audioChunks = [];
 
-  const notificationsElems =
-    notifications.length > 0 ? (
-      notifications.map((item, i) => (
-        <Notification key={i} text={item.text} time={item.time} />
-      ))
-    ) : (
-      <div className="text-center flex flex-col grow justify-center">
-        <h3 className="text-base font-semibold">
-          {dictionary.noNotesTxt[language]}
-        </h3>
-      </div>
-    );
-
-  function createTextNotification() {
-    const text = prompt('Введите текст уведомления');
+  function createTextNotification(text, time) {
+    /*     const text = prompt('Введите текст уведомления');
     if (text <= 0) return;
     const time = parseInt(prompt('Введите количество секунд до уведомления'));
-    if (time <= 0) return;
+    if (time <= 0) return; */
     makeNotification(text, +time * 1000);
     setNotifications((prev) => [...prev, { text, time }]);
     setTimeout(() => {
@@ -40,8 +30,10 @@ const NotificationsList = () => {
     }, +time * 1000);
   }
 
-  let mediaRecorder;
-  let audioChunks = [];
+  function handleCreateTextNotification(text, time) {
+    createTextNotification(text, time);
+    setShowReminderPopup(false);
+  }
 
   function startRecording() {
     navigator.mediaDevices
@@ -107,6 +99,19 @@ const NotificationsList = () => {
     return gptResponse;
   }
 
+  const notificationsElems =
+    notifications.length > 0 ? (
+      notifications.map((item, i) => (
+        <Notification key={i} text={item.text} time={item.time} />
+      ))
+    ) : (
+      <div className="text-center flex flex-col grow justify-center">
+        <h3 className="text-base font-semibold">
+          {dictionary.noNotesTxt[language]}
+        </h3>
+      </div>
+    );
+
   return (
     <div className="min-w-min border-l-2 border-secondary border-opacity-30 bg-white pt-4 px-6 ">
       <div className={`w-64 `}>
@@ -122,7 +127,7 @@ const NotificationsList = () => {
             >
               <img src={mic} alt="Голосовой ввод"></img>
             </button>
-            <button type="button" onClick={createTextNotification}>
+            <button type="button" onClick={() => setShowReminderPopup(true)}>
               <img src={plus} alt="Текстовое добавление заметки"></img>
             </button>
           </div>
@@ -133,6 +138,11 @@ const NotificationsList = () => {
           {notificationsElems}
         </div>
       </div>
+      <ReminderPopup
+        show={showReminderPopup}
+        onClose={() => setShowReminderPopup(false)}
+        onSubmit={handleCreateTextNotification}
+      />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
 import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
@@ -8,7 +8,6 @@ import { getDictionary } from '../utils/dictionary';
 import api from '../api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../redux/slices/userSlice';
-import ReminderPopup from '../components/Popups/ReminderPopup';
 import CreateProjectPopup from '../components/Popups/CreateProjectPopup';
 import DeleteProjectPopup from '../components/Popups/DeleteProjectPopup';
 import ErrorPopup from '../components/Popups/ErrorPopup';
@@ -27,16 +26,42 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   const chats = useSelector((state) => state.chat.allChats);
+  const [projectName, setProjectName] = useState({});
+  const [showCreateProjectPopup, setShowCreateProjectPopup] = useState(false);
+  const [showModsPopup, setShowModsPopup] = useState(false);
+  const [showErrorPopup, setshowErrorPopup] = useState(false);
+  const [showDeleteProjectPopup, setShowDeleteProjectPopup] = useState(false);
 
-  async function createChat() {
-    const title = prompt(dictionary.createChatPopupTitle[language]);
-    const mod = +prompt('Какой мод хотите использовать?');
-    const newChat = await api.addChat({ title, mod });
+  async function createChat(projectName, mod) {
+    if (!projectName || !mod) return;
+    const newChat = await api.addChat({ title: projectName.title, mod });
     dispatch(addChat(newChat));
     navigate(`/main/${newChat._id}`);
   }
 
-  async function deleteChat(chatId) {
+  const handleCreateProject = (name) => {
+    setProjectName(name);
+    setShowCreateProjectPopup(false);
+    setShowModsPopup(true);
+  };
+
+  const handleCancelCreateProject = () => {
+    setProjectName({});
+    setShowCreateProjectPopup(false);
+  };
+
+  const handleCreateProjectSubmit = async (mod) => {
+    await createChat(projectName, mod);
+    setProjectName({});
+    setShowModsPopup(false);
+  };
+
+  const handleDeleteProjectSubmit = async () => {
+    await deleteChat();
+    setShowDeleteProjectPopup(false);
+  };
+
+  async function deleteChat() {
     await api.deleteChat({ id: chatId });
     dispatch(removeChatById(chatId));
     if (chats.length > 1) {
@@ -59,31 +84,39 @@ const MainPage = () => {
   return (
     <div className="relative bg-white">
       <div className="flex justify-between">
-        <MainAsideBar chats={chats} createChat={createChat} />
-        {chatId ? <Outlet context={deleteChat} /> : <DialogGPTempty />}
+        <MainAsideBar
+          chats={chats}
+          createChat={() => setShowCreateProjectPopup(true)}
+        />
+        {chatId ? (
+          <Outlet context={() => setShowDeleteProjectPopup(true)} />
+        ) : (
+          <DialogGPTempty />
+        )}
         <NotificationsList />
       </div>
-      <ReminderPopup
-        show={false}
-        onClose={() => console.log('close')}
-        onSubmit={() => console.log('submit')}
-      />
       <CreateProjectPopup
-        show={false}
-        onClose={() => console.log('close')}
-        onSubmit={() => console.log('submit')}
+        show={showCreateProjectPopup}
+        onClose={handleCancelCreateProject}
+        onSubmit={handleCreateProject}
+      />
+      <ModsPopup
+        isOpen={showModsPopup}
+        onClose={() => setShowModsPopup(false)}
+        onSubmit={handleCreateProjectSubmit}
+        onPrev={() => {
+          setShowModsPopup(false);
+          setShowCreateProjectPopup(true);
+        }}
       />
       <DeleteProjectPopup
-        show={false}
-        onClose={() => console.log('close')}
-        onSubmit={() => console.log('submit')}
+        show={showDeleteProjectPopup}
+        onClose={() => setShowDeleteProjectPopup(false)}
+        onSubmit={handleDeleteProjectSubmit}
       />
-      <ErrorPopup show={false} onClose={() => console.log('close')} />
-      <ModsPopup
-        isOpen={false}
-        onClose={() => console.log('close')}
-        onSubmit={() => console.log('sumbit')}
-        selectedModeId={2}
+      <ErrorPopup
+        show={showErrorPopup}
+        onClose={() => setshowErrorPopup(false)}
       />
     </div>
   );

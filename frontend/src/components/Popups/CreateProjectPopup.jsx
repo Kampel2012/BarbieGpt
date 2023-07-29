@@ -10,6 +10,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
     onSubmit({
       title: reminderTitle,
     });
+    setReminderTitle('');
   };
 
   return (
@@ -34,7 +35,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
             <input
               type="text"
               className="w-full mt-6 px-4 pt-3 pb-4 rounded-xl border border-neutral-300
-              text-neutral-500 text-sm font-normal leading-tight"
+              text-neutral-500 text-sm font-normal leading-tight "
               placeholder="Название проекта"
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
@@ -45,7 +46,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
           <button
             type="submit"
             className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-medium leading-normal"
+            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
           >
             Далее
           </button>

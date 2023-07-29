@@ -8,10 +8,15 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit({
-      title: reminderTitle,
-      minutes: parseInt(minutes),
-    });
+    onSubmit(reminderTitle, parseInt(minutes));
+    setReminderTitle('');
+    setMinutes(1);
+  };
+
+  const handleClose = () => {
+    setReminderTitle('');
+    setMinutes(1);
+    onClose();
   };
 
   function minMax(text) {
@@ -30,7 +35,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
         <button
           type="button"
           className="absolute top-10 right-6"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <img alt="Закрыть" src={closeBtn} />
         </button>
