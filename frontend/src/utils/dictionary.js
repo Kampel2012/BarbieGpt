@@ -104,6 +104,14 @@ export function getDictionary() {
       RU: 'Чат с ChattyAI',
       EN: 'Chat with ChattyAI',
     },
+    emptyProjectTitle: {
+      RU: 'У вас пока нет ни одного проекта',
+      EN: "You don't have any projects yet",
+    },
+    emptyProjectSubitle: {
+      RU: 'Нажмите кнопку «Создать проект» для начала работы',
+      EN: 'Click the "Create Project" button to get started',
+    },
     emptyDialogTitle: {
       RU: 'У вас пока нет ни одного сообщения',
       EN: "You don't have any messages yet",
@@ -124,7 +132,7 @@ export function getDictionary() {
       stop: {
         RU: 'Закончить диктовку',
         EN: 'Finish dictation',
-      }
+      },
     },
     notesTitle: {
       RU: 'Напоминания',
