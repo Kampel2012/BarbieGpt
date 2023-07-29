@@ -17,6 +17,7 @@ import {
   removeChatById,
   setallChats,
 } from '../redux/slices/chatSlice';
+import ModsPopup from '../components/Popups/ModsPopup';
 
 const MainPage = () => {
   const { language } = useContext(LanguageContext);
@@ -76,6 +77,12 @@ const MainPage = () => {
         onSubmit={() => console.log('submit')}
       />
       <ErrorPopup show={false} onClose={() => console.log('close')} />
+      <ModsPopup
+        isOpen={false}
+        onClose={() => console.log('close')}
+        onSubmit={() => console.log('sumbit')}
+        selectedModeId={2}
+      />
     </div>
   );
 };
