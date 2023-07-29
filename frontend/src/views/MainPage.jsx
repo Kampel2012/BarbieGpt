@@ -50,12 +50,23 @@ const MainPage = () => {
         <MainAsideBar chats={chats} createChat={createChat} />
         {chatId ? <Outlet context={deleteChat} /> : <DialogGPTempty />}
         <NotificationsList />
-
       </div>
-      <ReminderPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
-      <CreateProjectPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
-      <DeleteProjectPopup show={false} onClose={() => console.log('close')} onSubmit={() => console.log('submit')} />
-      <ErrorPopup show={true} onClose={() => console.log('close')} />
+      <ReminderPopup
+        show={false}
+        onClose={() => console.log('close')}
+        onSubmit={() => console.log('submit')}
+      />
+      <CreateProjectPopup
+        show={false}
+        onClose={() => console.log('close')}
+        onSubmit={() => console.log('submit')}
+      />
+      <DeleteProjectPopup
+        show={false}
+        onClose={() => console.log('close')}
+        onSubmit={() => console.log('submit')}
+      />
+      <ErrorPopup show={false} onClose={() => console.log('close')} />
     </div>
   );
 };
