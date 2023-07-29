@@ -1,8 +1,15 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import closeBtn from '../../assets/close-button.svg';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 
 const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
+
   if (!show) return;
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     onSubmit();
@@ -23,10 +30,10 @@ const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
           <img alt="Закрыть" src={closeBtn} />
         </button>
         <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-6">
-          Удалить проект?
+          {dictionary.delProjectTitle[language]}
         </h2>
         <p className="text-neutral-800 text-base font-medium leading-snug mb-3">
-          После удаление вся информации из проекта будет недоступна
+          {dictionary.delProjectTxt[language]}
         </p>
         <form onSubmit={handleFormSubmit}>
           <button
@@ -34,7 +41,7 @@ const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
             className="w-full px-6 py-4 rounded-xl border border-neutral-300 mb-2
             text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
           >
-            Удалить
+            {dictionary.delBtn[language]}
           </button>
           <button
             type="button"
@@ -42,7 +49,7 @@ const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
             text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
             onClick={onClose}
           >
-            Отменить
+            {dictionary.cancelBtn[language]}
           </button>
         </form>
       </div>

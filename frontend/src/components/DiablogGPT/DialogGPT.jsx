@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { getGptResponse, sendAudioFile } from '../../api/apiOpenAI';
 import DownloadTextFile from '../DownloadTextFile';
 import { useState } from 'react';
@@ -14,6 +14,7 @@ import { setCurrentChat } from '../../redux/slices/chatSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getModsGpt } from '../../utils/workingMods';
+import { LanguageContext } from '../../context/LanguageContext';
 
 const DialogGPT = () => {
   const { chatId } = useParams();
@@ -28,6 +29,7 @@ const DialogGPT = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const mods = getModsGpt();
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     (async () => {
@@ -89,7 +91,7 @@ const DialogGPT = () => {
 
     try {
       if (messages.length <= 0)
-        promptText = mods.find((item) => item.id === mod).request + promptText;
+        promptText = mods.find((item) => item.id === mod).request[language] + promptText;
       setIsLoading(true);
       const newMessages = [
         {
@@ -137,7 +139,7 @@ const DialogGPT = () => {
             messages.map((item, i) => {
               if (i === 0 && mod !== 1) {
                 const reg = new RegExp(
-                  mods.find((item) => item.id === mod).request
+                  mods.find((item) => item.id === mod).request[language]
                 );
                 let shadowContent = item.content.replace(reg, '');
                 return (

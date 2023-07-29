@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import closeBtn from '../../assets/close-button.svg';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 
 const ReminderPopup = ({ show, onClose, onSubmit }) => {
   const [reminderTitle, setReminderTitle] = useState('');
   const [minutes, setMinutes] = useState(1);
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -40,10 +44,10 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
           <img alt="Закрыть" src={closeBtn} />
         </button>
         <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-1">
-          Создать напоминание
+          {dictionary.notePopupTitle[language]}
         </h2>
         <p className="text-neutral-400 text-sm font-normal leading-tight">
-          Напоминания сохраняются в течение сессии вкладки браузера
+          {dictionary.notesSubtitle[language]}
         </p>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
@@ -51,7 +55,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
               type="text"
               className="w-full mt-6 px-4 pt-3 pb-10 rounded-xl border border-neutral-300
               text-neutral-500 text-sm font-normal leading-tight"
-              placeholder="Напоминание"
+              placeholder={dictionary.notePlaceholder[language]}
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
               maxLength={50}
@@ -63,7 +67,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
           </div>
           <div className="mb-4">
             <label className="text-neutral-800 text-sm font-normal leading-tight">
-              Через сколько минут напомнить
+              {dictionary.noteMinTitle[language]}
             </label>
             <input
               type="number"
@@ -82,7 +86,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
             className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
             text-neutral-800 text-lg font-medium leading-normal"
           >
-            Создать
+            {dictionary.createBtn[language]}
           </button>
         </form>
       </div>

@@ -129,7 +129,7 @@ const NotificationsList = () => {
           </div>
         </div>
         <p className="text-secondary text-sm mb-3">
-          Напоминания сохраняются в течение сессии вкладки браузера
+          {dictionary.notesSubtitle[language]}
         </p>
         <div
           className={`flex flex-col gap-4 h-[calc(100vh-32px-32px-32px-40px)] overflow-y-auto ${scrollStyle}`}

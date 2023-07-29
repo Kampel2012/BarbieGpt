@@ -138,9 +138,61 @@ export function getDictionary() {
       RU: 'Напоминания',
       EN: 'Notifications',
     },
+    notesSubtitle: {
+      RU: 'Напоминания сохраняются в течение сессии вкладки браузера',
+      EN: 'Reminders are saved during the session of the browser tab',
+    },
     noNotesTxt: {
       RU: 'У вас пока не создано ни одного напоминания',
       EN: "You haven't created any reminders yet",
+    },
+    createProjectTxt: {
+      RU: 'Название проекта',
+      EN: 'Project name',
+    },
+    nextBtn: {
+      RU: 'Далее',
+      EN: 'Next',
+    },
+    choosingModeTitle: {
+      RU: 'Режим обработки проекта',
+      EN: 'Project processing mode',
+    },
+    backBtn: {
+      RU: 'Назад',
+      EN: 'Back',
+    },
+    createBtn: {
+      RU: 'Создать',
+      EN: 'Create',
+    },
+    delProjectTitle: {
+      RU: 'Удалить проект?',
+      EN: 'Delete a project?',
+    },
+    delProjectTxt: {
+      RU: 'После удаление вся информации из проекта будет недоступна',
+      EN: 'After deleting all the information from the project will be unavailable',
+    },
+    delBtn: {
+      RU: 'Удалить',
+      EN: 'Delete',
+    },
+    cancelBtn: {
+      RU: 'Отменить',
+      EN: 'Cancel',
+    },
+    notePopupTitle: {
+      RU: 'Создать напоминание',
+      EN: 'Create a reminder',
+    },
+    notePlaceholder: {
+      RU: 'Напоминание',
+      EN: 'Reminder',
+    },
+    noteMinTitle: {
+      RU: 'Через сколько минут напомнить',
+      EN: 'After how many minutes to remind',
     },
     // name: {
     //   RU: '',

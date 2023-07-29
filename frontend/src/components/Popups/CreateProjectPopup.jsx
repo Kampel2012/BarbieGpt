@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import PropTypes from 'prop-types';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 import closeBtn from '../../assets/close-button.svg';
 
 const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
   const [reminderTitle, setReminderTitle] = useState('');
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +32,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
           <img alt="Закрыть" src={closeBtn} />
         </button>
         <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-1">
-          Название проекта
+          {dictionary.createProjectTxt[language]}
         </h2>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
@@ -36,7 +40,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
               type="text"
               className="w-full mt-6 px-4 pt-3 pb-4 rounded-xl border border-neutral-300
               text-neutral-500 text-sm font-normal leading-tight "
-              placeholder="Название проекта"
+              placeholder={dictionary.createProjectTxt[language]}
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
               required
@@ -48,7 +52,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
             className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
             text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
           >
-            Далее
+            {dictionary.nextBtn[language]}
           </button>
         </form>
       </div>
