@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { getModsGpt } from '../../utils/workingMods';
 import { useState } from 'react';
+import closeBtn from '../../assets/close-button.svg';
 
 const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
   const [selectedModeId, setSelectedModeId] = useState(1);
@@ -22,10 +23,17 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
       }`}
     >
       <div className="bg-black bg-opacity-50 fixed inset-0 flex flex-col justify-center items-center">
-        <div className="bg-white rounded-xl p-6 max-w-4xl">
+        <div className="bg-white rounded-xl p-6 max-w-4xl relative">
           <h2 className="font-extrabold text-3xl mb-6 mt-2">
             Режим обработки проекта
           </h2>
+          <button
+            type="button"
+            className="absolute top-[40px] right-6"
+            onClick={onClose}
+          >
+            <img alt="Закрыть" src={closeBtn} />
+          </button>
           <div className="grid grid-cols-3 gap-4">
             {modesData.map((mode) => (
               <div
@@ -65,6 +73,7 @@ ModsPopup.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
+  onPrev: PropTypes.func,
 };
 
 export default ModsPopup;
