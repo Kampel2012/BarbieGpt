@@ -194,6 +194,18 @@ export function getDictionary() {
       RU: 'Через сколько минут напомнить',
       EN: 'After how many minutes to remind',
     },
+    registerErrTitle: {
+      RU: 'Ошибка регистрации',
+      EN: 'Registration error',
+    },
+    registerErrTxt: {
+      RU: 'При регистрации произошел технический сбой. Просьба повторить процесс регистрации.',
+      EN: 'There was a technical failure during registration. Please repeat the registration process.',
+    },
+    repeatBtn: {
+      RU: 'Повторить',
+      EN: 'Repeat',
+    },
     // name: {
     //   RU: '',
     //   EN: '',

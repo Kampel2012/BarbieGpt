@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import api from '../api/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import RegistrationErrorPopup from '../components/Popups/RegistrationErrorPopup';
 
 const Signup = () => {
   const { language } = useContext(LanguageContext);
@@ -13,6 +14,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { isAuth, setIsAuth } = useContext(AuthContext);
+  const [showRegistrationErrorPopup, setShowRegistrationErrorPopup] = useState(false);
 
   useEffect(() => {
     if (!isAuth) return;
@@ -28,7 +30,8 @@ const Signup = () => {
       localStorage.setItem('CHATTYTOKEN', res.jwt);
       setIsAuth(true);
     } catch (err) {
-      alert(err);
+      // alert(err);
+      setShowRegistrationErrorPopup(true);
     }
   }
 
@@ -102,6 +105,10 @@ const Signup = () => {
           </Link>
         </div>
       </div>
+      <RegistrationErrorPopup
+        show={showRegistrationErrorPopup}
+        onClose={() => setShowRegistrationErrorPopup(false)}
+      />
     </>
   );
 };

@@ -17,6 +17,7 @@ import {
   setallChats,
 } from '../redux/slices/chatSlice';
 import ModsPopup from '../components/Popups/ModsPopup';
+import RegistrationErrorPopup from '../components/Popups/RegistrationErrorPopup';
 
 const MainPage = () => {
   const { language } = useContext(LanguageContext);
