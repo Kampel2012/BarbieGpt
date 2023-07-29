@@ -94,14 +94,14 @@ class Api {
     });
   }
 
-  async addChat({ title, messages }) {
+  async addChat({ title, mod }) {
     return this._request(`${this._baseUrl}/chats`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('CHATTYTOKEN')}`,
       },
-      body: JSON.stringify({ title, messages }),
+      body: JSON.stringify({ title, mod }),
     });
   }
 

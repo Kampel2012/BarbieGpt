@@ -60,9 +60,9 @@ export const updateChatHistory = async (req, res, next) => {
 
 export const addChat = async (req, res, next) => {
   try {
-    const { title, messages = [] } = req.body;
+    const { title, mod = 1, messages = [] } = req.body;
     const { _id } = req.user;
-    const chat = await Chat.create({ owner: _id, title, messages });
+    const chat = await Chat.create({ owner: _id, title, mod, messages });
     res.status(http2Constants.HTTP_STATUS_CREATED).send(chat);
   } catch (error) {
     errorHandler(error, res, next);

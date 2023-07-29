@@ -13,6 +13,7 @@ import api from '../../api/api';
 import { setCurrentChat } from '../../redux/slices/chatSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { getModsGpt } from '../../utils/workingMods';
 
 const DialogGPT = () => {
   const { chatId } = useParams();
@@ -20,12 +21,13 @@ const DialogGPT = () => {
   const dispatch = useDispatch();
   const scrollStyle = styles.scrollbar;
   const deleteChat = useOutletContext();
-  const { title } = useSelector((state) => state.chat.currentChat);
+  const { title, mod } = useSelector((state) => state.chat.currentChat);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const mods = getModsGpt();
 
   useEffect(() => {
     (async () => {
@@ -84,7 +86,10 @@ const DialogGPT = () => {
 
   async function askGPT(promptText) {
     if (!promptText) return;
+
     try {
+      if (messages.length <= 0)
+        promptText = mods.find((item) => item.id === mod).request + promptText;
       setIsLoading(true);
       const newMessages = [
         {
@@ -110,10 +115,8 @@ const DialogGPT = () => {
 
   const messageLoading = (
     <MessageGPT
-      item={{
-        role: 'assistant',
-        content: 'Chatty AI обрабатывает запрос...',
-      }}
+      role={'assistant'}
+      content={'Chatty AI обрабатывает запрос...'}
     />
   );
 
@@ -131,7 +134,24 @@ const DialogGPT = () => {
       >
         <div className="h-full">
           {messages.length > 0 ? (
-            messages.map((item, i) => <MessageGPT key={i} item={item} />)
+            messages.map((item, i) => {
+              if (i === 0 && mod !== 1) {
+                const reg = new RegExp(
+                  mods.find((item) => item.id === mod).request
+                );
+                let shadowContent = item.content.replace(reg, '');
+                return (
+                  <MessageGPT
+                    key={i}
+                    role={item.role}
+                    content={shadowContent}
+                  />
+                );
+              }
+              return (
+                <MessageGPT key={i} role={item.role} content={item.content} />
+              );
+            })
           ) : isLoading ? (
             messageLoading
           ) : (

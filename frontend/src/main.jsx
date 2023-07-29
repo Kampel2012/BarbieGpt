@@ -15,5 +15,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </HashRouter>
   </React.StrictMode>
 );
-
-//! Оптимизировать ввод в инпуты ?

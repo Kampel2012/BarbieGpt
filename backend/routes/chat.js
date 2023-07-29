@@ -44,6 +44,7 @@ router.post(
     }),
     body: Joi.object().keys({
       title: Joi.string().required(),
+      mod: Joi.number(),
       messages: Joi.array(),
     }),
   }),

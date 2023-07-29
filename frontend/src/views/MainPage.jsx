@@ -30,7 +30,8 @@ const MainPage = () => {
 
   async function createChat() {
     const title = prompt(dictionary.createChatPopupTitle[language]);
-    const newChat = await api.addChat({ title });
+    const mod = +prompt('Какой мод хотите использовать?');
+    const newChat = await api.addChat({ title, mod });
     dispatch(addChat(newChat));
     navigate(`/main/${newChat._id}`);
   }
@@ -45,6 +46,7 @@ const MainPage = () => {
     }
   }
 
+  //* При первой загрузке только
   useEffect(() => {
     (async () => {
       const intianChats = await api.getChats();
@@ -52,7 +54,7 @@ const MainPage = () => {
       const user = await api.getMyProfile();
       dispatch(setCurrentUser(user));
     })();
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   return (
     <div className="relative bg-white">
