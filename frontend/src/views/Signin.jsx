@@ -52,9 +52,9 @@ const Signin = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required={true}
               ></input>
-              <span className="text-red-500 text-xs">
+              {/* <span className="text-red-500 text-xs">
                 Аккаунта с такой почтой не существует
-              </span>
+              </span> */}
             </label>
             <label>
               <p className="mb-2 text-secondary text-sm mt-4">
@@ -69,7 +69,7 @@ const Signin = () => {
                 required={true}
                 autoComplete="off"
               ></input>
-              <span className="text-red-500 text-xs">Неверный пароль</span>
+              {/* <span className="text-red-500 text-xs">Неверный пароль</span> */}
             </label>
             <button
               type="submit"

@@ -54,9 +54,9 @@ const Signup = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required={true}
               ></input>
-              <span className="text-red-500 text-xs">
+              {/* <span className="text-red-500 text-xs">
                 Некорректный формат почты (пример: example@gmail.com)
-              </span>
+              </span> */}
             </label>
             <label>
               <p className="mb-2 text-secondary text-sm mt-4">
@@ -71,10 +71,10 @@ const Signup = () => {
                 required={true}
                 autoComplete="off"
               ></input>
-              <span className="text-red-500 text-xs">
+              {/* <span className="text-red-500 text-xs">
                 Некорректный формат пароля (можно использовать только латинские
                 буквы и цифры)
-              </span>
+              </span> */}
             </label>
             <button
               type="submit"
