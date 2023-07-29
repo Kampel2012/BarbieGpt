@@ -33,7 +33,11 @@ const MainPage = () => {
   async function deleteChat(chatId) {
     await api.deleteChat({ id: chatId });
     dispatch(removeChatById(chatId));
-    navigate('/main');
+    if (chats.length > 1) {
+      navigate(`/main/${chats[0]._id}`);
+    } else {
+      navigate('/main');
+    }
   }
 
   useEffect(() => {
@@ -42,9 +46,6 @@ const MainPage = () => {
       dispatch(setallChats(intianChats));
       const user = await api.getMyProfile();
       dispatch(setCurrentUser(user));
-      /*       if (intianChats.length > 0) {
-        navigate(`/main/${intianChats[0]._id}`);
-      } */
     })();
   }, [dispatch, navigate]);
 
