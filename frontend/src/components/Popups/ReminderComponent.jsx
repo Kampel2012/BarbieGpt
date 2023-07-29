@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { makeNotification } from '../utils/notifications';
+import { makeNotification } from '../../utils/notifications';
 
 const ReminderComponent = () => {
   const [reminderText, setReminderText] = useState('');
