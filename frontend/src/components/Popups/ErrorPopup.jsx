@@ -38,7 +38,6 @@ const ErrorPopup = ({ show, onClose }) => {
 ErrorPopup.propTypes = {
   show: PropTypes.bool,
   onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
 };
 
 export default ErrorPopup;
