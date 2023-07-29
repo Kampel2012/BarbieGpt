@@ -27,6 +27,7 @@ const MainPage = () => {
     const title = prompt(dictionary.createChatPopupTitle[language]);
     const newChat = await api.addChat({ title });
     dispatch(addChat(newChat));
+    navigate(`/main/${newChat._id}`);
   }
 
   async function deleteChat(chatId) {
