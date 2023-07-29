@@ -17,7 +17,9 @@ const NotificationsList = () => {
 
   const notificationsElems =
     notifications.length > 0 ? (
-      notifications.map((item, i) => <Notification key={i} text={item} />)
+      notifications.map((item, i) => (
+        <Notification key={i} text={item.text} time={item.time} />
+      ))
     ) : (
       <div className="text-center flex flex-col grow justify-center">
         <h3 className="text-base font-semibold">
@@ -29,12 +31,12 @@ const NotificationsList = () => {
   function createTextNotification() {
     const text = prompt('Введите текст уведомления');
     if (text <= 0) return;
-    const time = prompt('Введите количество секунд до уведомления');
+    const time = parseInt(prompt('Введите количество секунд до уведомления'));
     if (time <= 0) return;
     makeNotification(text, +time * 1000);
-    setNotifications((prev) => [...prev, text]);
+    setNotifications((prev) => [...prev, { text, time }]);
     setTimeout(() => {
-      setNotifications((prev) => prev.filter((item) => item !== text));
+      setNotifications((prev) => prev.filter((item) => item.text !== text));
     }, +time * 1000);
   }
 
@@ -85,9 +87,9 @@ const NotificationsList = () => {
         });
         const [text, time] = params;
         makeNotification(text, time);
-        setNotifications((prev) => [...prev, text]);
+        setNotifications((prev) => [...prev, { text, time: time / 1000 }]);
         setTimeout(() => {
-          setNotifications((prev) => prev.filter((item) => item !== text));
+          setNotifications((prev) => prev.filter((item) => item.text !== text));
         }, time);
       });
     }

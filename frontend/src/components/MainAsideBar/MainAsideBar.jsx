@@ -27,14 +27,6 @@ const MainAsideBar = ({ chats, createChat }) => {
             {email}
           </p>
         </div>
-        <div className="mt-6 border-b  border-secondary border-opacity-30">
-          <div className="flex items-center gap-2 bg-activeBlue mb-4 px-3 py-2 rounded-xl leading-snug">
-            <div className="bg-messageIcon w-6 h-6"></div>
-            <p className="overflow-hidden whitespace-nowrap truncate text-lg leading-snug font-semibold">
-              {dictionary.mainAsideBarTitle[language]}
-            </p>
-          </div>
-        </div>
 
         {chats.length > 0 ? (
           <div className="my-2 flex flex-col gap-2">
@@ -60,7 +52,8 @@ const MainAsideBar = ({ chats, createChat }) => {
           onClick={signOut}
           className="mb-4 px-3 py-2 flex gap-2"
         >
-          <img src={signout} alt="Иконка выхода" /> {dictionary.exitBtn[[language]]}
+          <img src={signout} alt="Иконка выхода" />{' '}
+          {dictionary.exitBtn[[language]]}
         </button>
         <LanguageSwitcher />
       </div>
