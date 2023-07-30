@@ -30,9 +30,13 @@ const MainPage = () => {
 
   async function createChat(projectName, mod) {
     if (!projectName || !mod) return;
-    const newChat = await api.addChat({ title: projectName.title, mod });
-    dispatch(addChat(newChat));
-    navigate(`/main/${newChat._id}`);
+    try {
+      const newChat = await api.addChat({ title: projectName.title, mod });
+      dispatch(addChat(newChat));
+      navigate(`/main/${newChat._id}`);
+    } catch (error) {
+      setshowErrorPopup(true);
+    }
   }
 
   const handleCreateProject = (name) => {
@@ -58,24 +62,34 @@ const MainPage = () => {
   };
 
   async function deleteChat() {
-    await api.deleteChat({ id: chatId });
-    dispatch(removeChatById(chatId));
-    if (chats.length > 1) {
-      navigate(`/main/${chats[0]._id}`);
-    } else {
-      navigate('/main');
+    try {
+      await api.deleteChat({ id: chatId });
+      dispatch(removeChatById(chatId));
+      if (chats.length > 1) {
+        navigate(`/main/${chats[0]._id}`);
+      } else {
+        navigate('/main');
+      }
+    } catch (error) {
+      setshowErrorPopup(true);
     }
   }
 
-  //* При первой загрузке только
   useEffect(() => {
     (async () => {
-      const intianChats = await api.getChats();
-      dispatch(setallChats(intianChats));
-      const user = await api.getMyProfile();
-      dispatch(setCurrentUser(user));
+      try {
+        const intianChats = await api.getChats();
+        dispatch(setallChats(intianChats));
+        const user = await api.getMyProfile();
+        dispatch(setCurrentUser(user));
+        if (!chatId && intianChats.length >= 1) {
+          navigate(`/main/${intianChats[0]._id}`);
+        }
+      } catch (error) {
+        setshowErrorPopup(true);
+      }
     })();
-  }, [dispatch]);
+  }, [chatId, dispatch, navigate]);
 
   return (
     <div className="relative bg-white">

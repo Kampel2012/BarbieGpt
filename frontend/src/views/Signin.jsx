@@ -6,6 +6,7 @@ import Header from '../components/Header';
 
 import api from '../api/api';
 import { AuthContext } from '../context/AuthContext';
+import ErrorPopup from '../components/Popups/ErrorPopup';
 
 const Signin = () => {
   const { language } = useContext(LanguageContext);
@@ -13,6 +14,7 @@ const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { isAuth, setIsAuth } = useContext(AuthContext);
+  const [showErrorPopup, setshowErrorPopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +29,8 @@ const Signin = () => {
       localStorage.setItem('CHATTYTOKEN', res.jwt);
       setIsAuth(true);
     } catch (err) {
-      alert(err);
+      setshowErrorPopup(true);
+      console.log(err);
     }
   }
 
@@ -94,6 +97,10 @@ const Signin = () => {
           </Link>
         </div>
       </div>
+      <ErrorPopup
+        show={showErrorPopup}
+        onClose={() => setshowErrorPopup(false)}
+      />
     </>
   );
 };

@@ -7,6 +7,7 @@ import { getDictionary } from '../../utils/dictionary';
 import { sendAudioFile, getGptResponse } from '../../api/apiOpenAI';
 import { makeNotification } from '../../utils/notifications';
 import ReminderPopup from '../Popups/ReminderPopup';
+import ErrorPopup from '../Popups/ErrorPopup';
 
 const NotificationsList = () => {
   const scrollStyle = styles.scrollbar;
@@ -14,6 +15,7 @@ const NotificationsList = () => {
   const dictionary = getDictionary();
   const [notifications, setNotifications] = useState([]);
   const [showReminderPopup, setShowReminderPopup] = useState(false);
+  const [showErrorPopup, setshowErrorPopup] = useState(false);
   let mediaRecorder;
   let audioChunks = [];
 
@@ -42,56 +44,67 @@ const NotificationsList = () => {
         });
       })
       .catch(function (err) {
-        console.error('Ошибка доступа к микрофону:', err);
+        setshowErrorPopup(true);
+        console.warn('Ошибка доступа к микрофону:', err);
       });
   }
 
   function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-      mediaRecorder.stop(); // Останавливаем запись
+    try {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop(); // Останавливаем запись
 
-      mediaRecorder.addEventListener('stop', async function () {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Создаем Blob из массива аудио частей
-        audioChunks = [];
+        mediaRecorder.addEventListener('stop', async function () {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Создаем Blob из массива аудио частей
+          audioChunks = [];
 
-        const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
-        console.log('Текст транскрипции:', transcriptionFromOpenAi);
-        const gptResponse = await askGPT(
-          `Преобразуй запрос в вид: Text: описание кратко, Time:  число в миллисекундах. ${transcriptionFromOpenAi}`
-        );
-        let params = gptResponse.split('Time');
-        params = params.length > 1 ? params : params.split('\nTime');
-        if (params.length <= 1) {
-          console.warn('Ошибка неверный ответ от GPT'); //? сделать алерт?
-          return;
-        }
-        params = params.map((item, i) => {
-          if (i === 1) {
-            const time = item.replace(': ', '');
-            return parseInt(time);
+          const transcriptionFromOpenAi = await sendAudioFile(audioBlob); // Отправляем аудиофайл на сервер OpenAI
+          console.log('Текст транскрипции:', transcriptionFromOpenAi);
+          const gptResponse = await askGPT(
+            `Преобразуй запрос в вид: Text: описание кратко, Time:  число в миллисекундах. ${transcriptionFromOpenAi}`
+          );
+          let params = gptResponse.split('Time');
+          params = params.length > 1 ? params : params.split('\nTime');
+          if (params.length <= 1) {
+            console.warn('Ошибка неверный ответ от GPT'); //? сделать алерт?
+            return;
           }
-          return item.replace('Text: ', '');
+          params = params.map((item, i) => {
+            if (i === 1) {
+              const time = item.replace(': ', '');
+              return parseInt(time);
+            }
+            return item.replace('Text: ', '');
+          });
+          const [text, time] = params;
+          makeNotification(text, time);
+          setNotifications((prev) => [...prev, { text, time: time / 1000 }]);
+          setTimeout(() => {
+            setNotifications((prev) =>
+              prev.filter((item) => item.text !== text)
+            );
+          }, time);
         });
-        const [text, time] = params;
-        makeNotification(text, time);
-        setNotifications((prev) => [...prev, { text, time: time / 1000 }]);
-        setTimeout(() => {
-          setNotifications((prev) => prev.filter((item) => item.text !== text));
-        }, time);
-      });
+      }
+    } catch (error) {
+      setshowErrorPopup(true);
     }
   }
 
   async function askGPT(promptText) {
-    const newMessages = [
-      {
-        role: 'user',
-        content: promptText,
-      },
-    ];
-    const gptResponse = await getGptResponse([...newMessages]);
-    console.log('Ответ от GPT:', gptResponse);
-    return gptResponse;
+    try {
+      const newMessages = [
+        {
+          role: 'user',
+          content: promptText,
+        },
+      ];
+      const gptResponse = await getGptResponse([...newMessages]);
+      console.log('Ответ от GPT:', gptResponse);
+      return gptResponse;
+    } catch (error) {
+      setshowErrorPopup(true);
+    }
   }
 
   const notificationsElems =
@@ -139,6 +152,10 @@ const NotificationsList = () => {
         show={showReminderPopup}
         onClose={() => setShowReminderPopup(false)}
         onSubmit={handleCreateTextNotification}
+      />
+      <ErrorPopup
+        show={showErrorPopup}
+        onClose={() => setshowErrorPopup(false)}
       />
     </div>
   );

@@ -1,14 +1,22 @@
 import micIcon from '../assets/icon/mic.svg';
 import vector from '../assets/VectorPromo.svg';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { getDictionary } from '../utils/dictionary';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const PromoPage = () => {
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
+  const { isAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuth) return;
+    navigate('/main');
+  }, [isAuth, navigate]);
 
   return (
     <>

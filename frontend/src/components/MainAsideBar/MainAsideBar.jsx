@@ -9,11 +9,13 @@ import { AuthContext } from '../../context/AuthContext';
 import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
 import { useSelector } from 'react-redux';
+import styles from './MainAsideBar.module.css';
 
 const MainAsideBar = ({ chats, createChat }) => {
   const { signOut } = useContext(AuthContext);
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
+  const scrollStyle = styles.scrollbar;
 
   const { email } = useSelector((state) => state.user.currentUser);
 
@@ -27,9 +29,18 @@ const MainAsideBar = ({ chats, createChat }) => {
             {email}
           </p>
         </div>
-
+        <button
+          type="button"
+          onClick={createChat}
+          className="mt-6 flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
+        >
+          <img src={plus} className="" />
+          <p>{dictionary.createProjectBtn[language]}</p>
+        </button>
         {chats.length > 0 ? (
-          <div className="my-2 flex flex-col gap-2">
+          <div
+            className={`my-2 flex flex-col gap-2 h-[570px] overflow-y-auto ${scrollStyle}`}
+          >
             {chats.map((item) => (
               <ProjectBadge key={item._id} name={item.title} id={item._id} />
             ))}
@@ -37,14 +48,6 @@ const MainAsideBar = ({ chats, createChat }) => {
         ) : (
           <EmptyProject />
         )}
-        <button
-          type="button"
-          onClick={createChat}
-          className="flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
-        >
-          <img src={plus} className="" />
-          <p>{dictionary.createProjectBtn[language]}</p>
-        </button>
       </div>
       <div className="">
         <button

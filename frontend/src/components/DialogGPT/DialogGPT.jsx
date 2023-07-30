@@ -14,6 +14,7 @@ import { setCurrentChat } from '../../redux/slices/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getModsGpt } from '../../utils/workingMods';
 import { LanguageContext } from '../../context/LanguageContext';
+import ErrorPopup from '../Popups/ErrorPopup';
 
 const DialogGPT = () => {
   const { language } = useContext(LanguageContext);
@@ -28,6 +29,7 @@ const DialogGPT = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const [showErrorPopup, setshowErrorPopup] = useState(false);
   const messagesEndRef = useRef(null);
   const mods = getModsGpt();
 
@@ -85,13 +87,17 @@ const DialogGPT = () => {
   }
 
   async function processAudioBlob(audioBlob) {
-    if (audioBlob.size <= 10000) return;
-    setIsLoading(true);
-    const transcriptionFromOpenAi = await sendAudioFile(audioBlob);
-    console.log('Текст транскрипции:', transcriptionFromOpenAi);
-    setAudioChunks([]);
-    setIsLoading(false);
-    return transcriptionFromOpenAi;
+    try {
+      if (audioBlob.size <= 10000) return;
+      setIsLoading(true);
+      const transcriptionFromOpenAi = await sendAudioFile(audioBlob);
+      console.log('Текст транскрипции:', transcriptionFromOpenAi);
+      setAudioChunks([]);
+      setIsLoading(false);
+      return transcriptionFromOpenAi;
+    } catch (error) {
+      setshowErrorPopup(true);
+    }
   }
 
   async function askGPT(promptText) {
@@ -118,7 +124,7 @@ const DialogGPT = () => {
       setMessages(resUpdateChat.messages);
       return gptResponse;
     } catch (error) {
-      console.log(error);
+      setshowErrorPopup(true);
     } finally {
       setIsLoading(false);
     }
@@ -186,6 +192,10 @@ const DialogGPT = () => {
 
         <DownloadTextFile messages={messages} />
       </div>
+      <ErrorPopup
+        show={showErrorPopup}
+        onClose={() => setshowErrorPopup(false)}
+      />
     </div>
   );
 };

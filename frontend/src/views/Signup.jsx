@@ -14,7 +14,8 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { isAuth, setIsAuth } = useContext(AuthContext);
-  const [showRegistrationErrorPopup, setShowRegistrationErrorPopup] = useState(false);
+  const [showRegistrationErrorPopup, setShowRegistrationErrorPopup] =
+    useState(false);
 
   useEffect(() => {
     if (!isAuth) return;
@@ -30,7 +31,6 @@ const Signup = () => {
       localStorage.setItem('CHATTYTOKEN', res.jwt);
       setIsAuth(true);
     } catch (err) {
-      // alert(err);
       setShowRegistrationErrorPopup(true);
     }
   }
