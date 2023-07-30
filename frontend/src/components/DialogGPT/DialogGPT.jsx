@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getModsGpt } from '../../utils/workingMods';
 import { LanguageContext } from '../../context/LanguageContext';
 import ErrorPopup from '../Popups/ErrorPopup';
+import { getDictionary } from '../../utils/dictionary';
 
 const DialogGPT = () => {
   const { language } = useContext(LanguageContext);
@@ -32,6 +33,7 @@ const DialogGPT = () => {
   const [showErrorPopup, setshowErrorPopup] = useState(false);
   const messagesEndRef = useRef(null);
   const mods = getModsGpt();
+  const dictionary = getDictionary();
 
   useEffect(() => {
     (async () => {
@@ -133,7 +135,7 @@ const DialogGPT = () => {
   const messageLoading = (
     <MessageGPT
       role={'assistant'}
-      content={'Chatty AI обрабатывает запрос...'}
+      content={dictionary.processingRequest[language]}
     />
   );
 

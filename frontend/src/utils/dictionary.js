@@ -214,6 +214,10 @@ export function getDictionary() {
       RU: 'Попробуйте снова',
       EN: 'Try again',
     },
+    processingRequest: {
+      RU: 'Chatty AI обрабатывает запрос...',
+      EN: 'Chatty AI is processing the request... ',
+    },
     // name: {
     //   RU: '',
     //   EN: '',
