@@ -54,10 +54,7 @@ const Signin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required={true}
-              ></input>
-              {/* <span className="text-red-500 text-xs">
-                Аккаунта с такой почтой не существует
-              </span> */}
+              />
             </label>
             <label>
               <p className="mb-2 text-secondary text-sm mt-4">
@@ -71,12 +68,11 @@ const Signin = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required={true}
                 autoComplete="off"
-              ></input>
-              {/* <span className="text-red-500 text-xs">Неверный пароль</span> */}
+              />
             </label>
             <button
               type="submit"
-              className="bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30 "
+              className="hover:bg-btnHoverBlue bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30 "
             >
               {dictionary.enterBtn[language]}
             </button>
@@ -91,7 +87,7 @@ const Signin = () => {
           <Link
             to={'/sign-up'}
             type="button"
-            className="text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
+            className="hover:border-opacity-100 text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
           >
             {dictionary.registerBtn[language]}
           </Link>

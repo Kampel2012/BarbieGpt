@@ -24,7 +24,7 @@ function DownloadTextFile({ messages }) {
     <button
       type="button"
       onClick={handleClick}
-      className="px-4 py-3 border border-secondary border-opacity-30 rounded-xl shrink-0"
+      className="px-4 py-3 border border-secondary border-opacity-30 rounded-xl shrink-0 hover:border-opacity-100"
     >
       <img src={downloadIcon} />
     </button>

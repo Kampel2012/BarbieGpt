@@ -66,7 +66,7 @@ const NotificationsList = () => {
           let params = gptResponse.split('Time');
           params = params.length > 1 ? params : params.split('\nTime');
           if (params.length <= 1) {
-            console.warn('Ошибка неверный ответ от GPT'); //? сделать алерт?
+            setshowErrorPopup(true);
             return;
           }
           params = params.map((item, i) => {
@@ -132,9 +132,13 @@ const NotificationsList = () => {
               type="button"
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
-              className="h-6 w-6 bg-micIcon active:bg-micActiveIcon"
+              className="h-6 w-6 bg-micIcon active:bg-micActiveIcon hover:opacity-70"
             />
-            <button type="button" onClick={() => setShowReminderPopup(true)}>
+            <button
+              type="button"
+              onClick={() => setShowReminderPopup(true)}
+              className="hover:opacity-70"
+            >
               <img src={pen} alt="Текстовое добавление заметки"></img>
             </button>
           </div>

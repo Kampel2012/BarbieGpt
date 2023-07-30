@@ -32,7 +32,7 @@ const MainAsideBar = ({ chats, createChat }) => {
         <button
           type="button"
           onClick={createChat}
-          className="mt-6 flex bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
+          className="mt-6 flex hover:bg-btnHoverBlue bg-seagreen text-lg w-full py-3 rounded-xl leading-tight gap-2 border border-secondary border-opacity-30 font-semibold items-center justify-center"
         >
           <img src={plus} className="" />
           <p>{dictionary.createProjectBtn[language]}</p>
@@ -53,7 +53,7 @@ const MainAsideBar = ({ chats, createChat }) => {
         <button
           type="button"
           onClick={signOut}
-          className="mb-4 px-3 py-2 flex gap-2"
+          className="mb-4 px-3 py-2 flex gap-2 hover:opacity-70"
         >
           <img src={signout} alt="Иконка выхода" />{' '}
           {dictionary.exitBtn[[language]]}

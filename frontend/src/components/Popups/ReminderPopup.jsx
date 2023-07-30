@@ -38,7 +38,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
       <div className="relative bg-white w-[480px] px-6 py-8 rounded-2xl shadow-md">
         <button
           type="button"
-          className="absolute top-10 right-6"
+          className="absolute top-10 right-6 hover:opacity-70"
           onClick={handleClose}
         >
           <img alt="Закрыть" src={closeBtn} />
@@ -58,11 +58,11 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
               placeholder={dictionary.notePlaceholder[language]}
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
-              maxLength={50}
+              maxLength={100}
               required
             />
             <p className="text-right text-neutral-400 text-sm font-normal leading-tight -mt-7 mr-3">
-              {`${reminderTitle.length}/50`}
+              {`${reminderTitle.length}/100`}
             </p>
           </div>
           <div className="mb-4">
@@ -83,7 +83,7 @@ const ReminderPopup = ({ show, onClose, onSubmit }) => {
           </div>
           <button
             type="submit"
-            className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
+            className="w-full px-6 py-4 bg-seagreen hover:bg-btnHoverBlue rounded-xl border border-neutral-300
             text-neutral-800 text-lg font-medium leading-normal"
           >
             {dictionary.createBtn[language]}

@@ -22,7 +22,7 @@ const DropDownList = ({ show, onLogin, onRegister }) => {
         show ? 'block' : 'hidden'
       } `}
     >
-      <div className="relative bg-white w-[480px] px-6 py-6 rounded-2xl border border-neutral-300 shadow-md">
+      <div className="relative bg-white w-[480px] px-6 py-6 rounded-2xl border border-secondary border-opacity-30 shadow-md">
         <img
           alt="Стрелка"
           src={arrow}
@@ -30,16 +30,16 @@ const DropDownList = ({ show, onLogin, onRegister }) => {
         />
         <button
           type="button"
-          className="w-full px-6 py-4 bg-seagreen rounded-xl border border-neutral-300 mb-2
-            text-neutral-800 text-lg font-semibold leading-normal"
+          className="hover:bg-btnHoverBlue w-full px-6 py-4 bg-seagreen rounded-xl border border-secondary border-opacity-30 mb-2
+            text-lg font-semibold leading-normal"
           onClick={handleLogin}
         >
           {dictionary.enterBtn[language]}
         </button>
         <button
           type="button"
-          className="w-full px-6 py-4 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-semibold leading-normal"
+          className="w-full px-6 py-4 rounded-xl text-lg font-semibold leading-normal border border-secondary
+              border-opacity-30 hover:border-opacity-100"
           onClick={handleRegister}
         >
           {dictionary.registerBtn[language]}

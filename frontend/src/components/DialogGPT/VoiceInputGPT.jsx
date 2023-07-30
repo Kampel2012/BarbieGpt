@@ -20,7 +20,7 @@ const VoiceInputGPT = ({
         <button
           type="button"
           onClick={stopRecording}
-          className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold"
+          className="flex items-center border border-secondary border-opacity-30 bg-seagreen rounded-xl px-4 py-3 ml-3 mr-3 font-semibold hover:bg-btnHoverBlue"
         >
           {dictionary.recordingBtn.stop[language]}
           <img src={record} alt="Голосовой ввод закончить" className="ml-2" />
@@ -30,7 +30,7 @@ const VoiceInputGPT = ({
           type="button"
           onClick={startRecording}
           disabled={isLoading}
-          className="flex items-center border border-secondary border-opacity-30 bg-btnActive rounded-xl px-4 py-3 ml-3 mr-3 font-semibold "
+          className="flex items-center border border-secondary border-opacity-30 bg-btnActive rounded-xl px-4 py-3 ml-3 mr-3 font-semibold hover:bg-btnHoverBlue"
         >
           {dictionary.recordingBtn.start[language]}
           <img src={mic} alt="Голосовой ввод начать" className="ml-2" />

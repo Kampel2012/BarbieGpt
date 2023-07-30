@@ -34,7 +34,10 @@ const TextInputGPT = ({ isLoading, askGPT, sendAudioFile }) => {
           askGPT={askGPT}
           sendAudioFile={sendAudioFile}
         />
-        <button className="bg-seagreen py-3 px-3 shrink-0" disabled={isLoading}>
+        <button
+          className="bg-seagreen py-3 px-3 shrink-0 hover:bg-btnHoverBlue "
+          disabled={isLoading}
+        >
           <img src={sendicon} alt="Отправить запрос" />
         </button>
       </form>

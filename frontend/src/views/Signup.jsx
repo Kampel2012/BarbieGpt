@@ -56,10 +56,7 @@ const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required={true}
-              ></input>
-              {/* <span className="text-red-500 text-xs">
-                Некорректный формат почты (пример: example@gmail.com)
-              </span> */}
+              />
             </label>
             <label>
               <p className="mb-2 text-secondary text-sm mt-4">
@@ -73,15 +70,11 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required={true}
                 autoComplete="off"
-              ></input>
-              {/* <span className="text-red-500 text-xs">
-                Некорректный формат пароля (можно использовать только латинские
-                буквы и цифры)
-              </span> */}
+              />
             </label>
             <button
               type="submit"
-              className="bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30"
+              className="hover:bg-btnHoverBlue bg-seagreen text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 font-semibold mt-6 border border-secondary border-opacity-30"
             >
               {dictionary.createAccBtn[language]}
             </button>
@@ -99,7 +92,7 @@ const Signup = () => {
           <Link
             to={'/sign-in'}
             type="button"
-            className="text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
+            className="hover:border-opacity-100 text-lg w-full text-center py-4 rounded-xl leading-tight gap-2 bg-white border border-secondary border-opacity-30 mb-8 font-semibold"
           >
             {dictionary.enterBtn[language]}
           </Link>

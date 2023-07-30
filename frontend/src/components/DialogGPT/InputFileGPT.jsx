@@ -49,7 +49,7 @@ const InputFileGPT = ({ askGPT, sendAudioFile, isLoading }) => {
     <div className="flex mr-3 shrink-0">
       <label
         htmlFor="fileInputGPT"
-        className="rounded cursor-pointer leading-3"
+        className="rounded cursor-pointer leading-3 hover:opacity-70"
       >
         <img src={attachments} alt="Прикрепить файл" />
       </label>

@@ -13,7 +13,7 @@ const LanguageSwitcher = () => {
     <div className="flex items-center h-12 p-1 border rounded-xl font-medium max-w-max">
       <button
         type="button"
-        className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 ${
+        className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 hover:opacity-70 ${
           language === 'EN' ? 'bg-gray-200' : 'bg-inherit'
         }`}
         onClick={() => handleLanguageChange('EN')}
@@ -23,7 +23,7 @@ const LanguageSwitcher = () => {
       </button>
       <button
         type="button"
-        className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 ${
+        className={`px-3 py-2 rounded-xl flex gap-2 transition-all leading-5 hover:opacity-70 ${
           language === 'RU' ? 'bg-gray-200' : 'bg-inherit'
         }`}
         onClick={() => handleLanguageChange('RU')}

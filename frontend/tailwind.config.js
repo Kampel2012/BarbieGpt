@@ -24,6 +24,7 @@ export default {
         chatGray: '#F4F4F4',
         bgBlue: '#EDFBFF',
         btnActive: '#6BDCFF',
+        btnHoverBlue: '#21C9FF',
       },
       fontFamily: {
         sans: ['Mulish', 'sans-serif'],

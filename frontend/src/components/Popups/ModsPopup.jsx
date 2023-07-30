@@ -31,7 +31,7 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
           </h2>
           <button
             type="button"
-            className="absolute top-[40px] right-6"
+            className="absolute top-[40px] right-6 hover:opacity-70"
             onClick={onClose}
           >
             <img alt="Закрыть" src={closeBtn} />
@@ -50,21 +50,27 @@ const ModsPopup = ({ isOpen, onClose, onSubmit, onPrev }) => {
                 }}
               >
                 <h3 className="font-bold pb-2">{mode.title[language]}</h3>
-                <p className="text-secondary text-sm">{mode.description[language]}</p>
-                <img alt='Кружок' src={selectedModeId === mode.id ? activeCircle : circle} className='absolute top-4 right-4 first-letter' />
+                <p className="text-secondary text-sm">
+                  {mode.description[language]}
+                </p>
+                <img
+                  alt="Кружок"
+                  src={selectedModeId === mode.id ? activeCircle : circle}
+                  className="absolute top-4 right-4 first-letter"
+                />
               </div>
             ))}
           </div>
           <div className="text-center mt-2">
             <button
               onClick={onPrev}
-              className="mt-4 px-20 py-3 mr-3 font-semibold border border-secondary border-opacity-30 rounded-xl hover:bg-activeBlue"
+              className="mt-4 px-20 py-3 mr-3 font-semibold border border-secondary border-opacity-30 rounded-xl hover:border-opacity-100"
             >
               {dictionary.backBtn[language]}
             </button>
             <button
               onClick={onSubmitHandler}
-              className="mt-4 px-20 py-3 bg-seagreen font-semibold border border-secondary border-opacity-30 rounded-xl hover:bg-activeBlue"
+              className="mt-4 px-20 py-3 bg-seagreen font-semibold border border-secondary border-opacity-30 rounded-xl hover:bg-btnHoverBlue"
             >
               {dictionary.createBtn[language]}
             </button>

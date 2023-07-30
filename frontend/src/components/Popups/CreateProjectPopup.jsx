@@ -1,4 +1,4 @@
-import { useState,useContext } from 'react';
+import { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { LanguageContext } from '../../context/LanguageContext';
 import { getDictionary } from '../../utils/dictionary';
@@ -26,20 +26,20 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
       <div className="relative bg-white w-[480px] px-6 py-8 rounded-2xl shadow-md">
         <button
           type="button"
-          className="absolute top-[40px] right-6"
+          className="absolute top-[40px] right-6 hover:opacity-70"
           onClick={onClose}
         >
           <img alt="Закрыть" src={closeBtn} />
         </button>
-        <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-1">
+        <h2 className=" text-3xl font-extrabold leading-10 mb-1">
           {dictionary.createProjectTxt[language]}
         </h2>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
             <input
               type="text"
-              className="w-full mt-6 px-4 pt-3 pb-4 rounded-xl border border-neutral-300
-              text-neutral-500 text-sm font-normal leading-tight "
+              className="w-full mt-6 px-4 pt-3 pb-4 rounded-xl border border-secondary border-opacity-30
+              text-secondary text-sm font-normal leading-tight "
               placeholder={dictionary.createProjectTxt[language]}
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
@@ -49,8 +49,8 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
           </div>
           <button
             type="submit"
-            className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
+            className="w-full px-6 py-4 bg-seagreen rounded-xl border border-secondary border-opacity-30
+            text-neutral-800 text-lg font-medium leading-normal hover:bg-btnHoverBlue"
           >
             {dictionary.nextBtn[language]}
           </button>

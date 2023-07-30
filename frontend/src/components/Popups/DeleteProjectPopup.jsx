@@ -24,29 +24,29 @@ const DeleteProjectPopup = ({ show, onClose, onSubmit }) => {
       <div className="relative bg-white w-[480px] px-6 py-8 rounded-2xl shadow-md">
         <button
           type="button"
-          className="absolute top-[40px] right-6"
+          className="absolute top-[40px] right-6 hover:opacity-70"
           onClick={onClose}
         >
           <img alt="Закрыть" src={closeBtn} />
         </button>
-        <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-6">
+        <h2 className="text-3xl font-extrabold leading-10 mb-6">
           {dictionary.delProjectTitle[language]}
         </h2>
-        <p className="text-neutral-800 text-base font-medium leading-snug mb-3">
+        <p className="text-base font-medium leading-snug mb-3">
           {dictionary.delProjectTxt[language]}
         </p>
         <form onSubmit={handleFormSubmit}>
           <button
             type="submit"
-            className="w-full px-6 py-4 rounded-xl border border-neutral-300 mb-2
-            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
+            className="w-full px-6 py-4 rounded-xl border border-secondary border-opacity-30 mb-2
+             text-lg font-medium leading-normal hover:border-opacity-100"
           >
             {dictionary.delBtn[language]}
           </button>
           <button
             type="button"
-            className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-medium leading-normal hover:bg-activeBlue"
+            className="w-full px-6 py-4 bg-seagreen rounded-xl border border-secondary border-opacity-30
+             text-lg font-medium leading-normal hover:bg-btnHoverBlue"
             onClick={onClose}
           >
             {dictionary.cancelBtn[language]}
