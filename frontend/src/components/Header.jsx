@@ -20,7 +20,7 @@ const Header = () => {
             type="button"
             className="bg-btnIconUser w-14 h-12 bg-no-repeat px-4 py-3 bg-center border rounded-xl border-tertiary"
             onClick={() => setShowDropDownList(!showDropDownList)}
-          ></button>
+          />
         </div>
       </div>
       <DropDownList

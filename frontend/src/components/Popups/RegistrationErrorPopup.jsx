@@ -9,8 +9,9 @@ const RegistrationErrorPopup = ({ show, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${show ? 'block' : 'hidden'
-        } bg-opacity-50 bg-black`}
+      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${
+        show ? 'block' : 'hidden'
+      } bg-opacity-50 bg-black`}
     >
       <div className="relative bg-white w-[480px] px-6 py-8 rounded-2xl shadow-md">
         <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-6">
@@ -21,7 +22,7 @@ const RegistrationErrorPopup = ({ show, onClose }) => {
         </p>
         <button
           type="button"
-          className="w-full px-6 py-4 bg-sky-400 rounded-xl border border-neutral-300
+          className="w-full px-6 py-4 bg-seagreen rounded-xl border border-secondary border-opacity-30
             text-neutral-800 text-lg font-medium leading-normal"
           onClick={onClose}
         >
