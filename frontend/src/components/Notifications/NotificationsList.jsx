@@ -20,11 +20,11 @@ const NotificationsList = () => {
   let audioChunks = [];
 
   function createTextNotification(text, time) {
-    makeNotification(text, +time * 1000);
+    makeNotification(text, +time * 1000 * 60);
     setNotifications((prev) => [...prev, { text, time }]);
     setTimeout(() => {
       setNotifications((prev) => prev.filter((item) => item.text !== text));
-    }, +time * 1000);
+    }, +time * 1000 * 60);
   }
 
   function handleCreateTextNotification(text, time) {
@@ -110,7 +110,7 @@ const NotificationsList = () => {
   const notificationsElems =
     notifications.length > 0 ? (
       notifications.map((item, i) => (
-        <Notification key={i} text={item.text} time={item.time} />
+        <Notification key={i} text={item.text} time={+item.time * 60} />
       ))
     ) : (
       <div className="text-center flex flex-col grow justify-center">
