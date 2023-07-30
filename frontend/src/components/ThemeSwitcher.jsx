@@ -1,7 +1,9 @@
-import { useState, useContext } from 'react';
-import { LanguageContext } from '../context/LanguageContext';
+import { useState /* useContext */ } from 'react';
+// import { LanguageContext } from '../context/LanguageContext';
 import sunIcon from '../assets/icon/sun.svg';
 import moonIcon from '../assets/icon/moon.svg';
+
+// TODO сделать темную тему после хакатона
 
 const ThemeSwitcher = () => {
   /*   const { language, setLanguage } = useContext(LanguageContext); */

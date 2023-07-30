@@ -30,7 +30,6 @@ const scheduleNotification = (reminderText, reminderTime) => {
   ) {
     requestNotificationPermission();
     const reminderTimeMilliseconds = parseInt(reminderTime); // Переводим время в миллисекунды (1 час = 3600000 миллисекунд / минутка 60000 мс)
-    alert('Уведомление успешно создано ');
     setTimeout(() => {
       createNotification(reminderText);
     }, reminderTimeMilliseconds);

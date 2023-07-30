@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import closeBtn from '../../assets/close-button.svg';
+import { useContext } from 'react';
+import { LanguageContext } from '../../context/LanguageContext';
+import { getDictionary } from '../../utils/dictionary';
 
 const ErrorPopup = ({ show, onClose }) => {
+  const { language } = useContext(LanguageContext);
+  const dictionary = getDictionary();
+
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${
@@ -17,18 +23,18 @@ const ErrorPopup = ({ show, onClose }) => {
           <img alt="Закрыть" src={closeBtn} />
         </button>
         <h2 className="text-neutral-800 text-3xl font-extrabold leading-10 mb-3">
-          Что-то пошло не так...
+          {dictionary.tryRepeatTitle[language]}
         </h2>
         <p className="text-neutral-800 text-base font-medium leading-snug mb-6">
-          Попробуйте снова
+          {dictionary.tryRepeatSubitle[language]}
         </p>
         <button
           type="button"
           className="w-full px-6 py-4 rounded-xl border border-neutral-300
-            text-neutral-800 text-lg font-medium leading-normal"
+            text-neutral-800 text-lg font-medium leading-normal hover:bg-btnActive"
           onClick={onClose}
         >
-          Назад
+          {dictionary.backBtn[language]}
         </button>
       </div>
     </div>

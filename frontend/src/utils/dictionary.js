@@ -206,6 +206,14 @@ export function getDictionary() {
       RU: 'Повторить',
       EN: 'Repeat',
     },
+    tryRepeatTitle: {
+      RU: 'Что-то пошло не так...',
+      EN: 'Something went wrong...',
+    },
+    tryRepeatSubitle: {
+      RU: 'Попробуйте снова',
+      EN: 'Try again',
+    },
     // name: {
     //   RU: '',
     //   EN: '',

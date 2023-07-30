@@ -8,7 +8,6 @@ const InputFileGPT = ({ askGPT, sendAudioFile, isLoading }) => {
     const file = event.target.files[0];
     if (!file) return;
     const fileType = file.type;
-    console.log(fileType === 'text/plain' && file.name.endsWith('.txt'));
     if (fileType === 'text/plain' && file.name.endsWith('.txt')) {
       // Если выбран .txt файл, выполнить askGPT
       const text = await readFileAsText(file);

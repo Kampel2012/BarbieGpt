@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 import { saveAs } from 'file-saver';
-/* import { getDictionary } from '../utils/dictionary';
-import { useContext } from 'react';
-import { LanguageContext } from '../context/LanguageContext'; */
 import downloadIcon from '../assets/icon/download.svg';
 
 DownloadTextFile.propTypes = {
@@ -10,8 +7,6 @@ DownloadTextFile.propTypes = {
 };
 
 function DownloadTextFile({ messages }) {
-  /*   const language = useContext(LanguageContext);
-  const dictionary = getDictionary(); */
   const text = messages
     .map((item, i) => {
       return `${i + 1}) ${item.role === 'user' ? 'User' : 'GPT'}: ${

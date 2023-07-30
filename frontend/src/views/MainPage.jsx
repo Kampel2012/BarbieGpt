@@ -1,10 +1,8 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainAsideBar from '../components/MainAsideBar/MainAsideBar';
 import NotificationsList from '../components/Notifications/NotificationsList';
-import DialogGPTempty from '../components/DiablogGPT/DialogGPTempty';
-import { LanguageContext } from '../context/LanguageContext';
-import { getDictionary } from '../utils/dictionary';
+import DialogGPTempty from '../components/DialogGPT/DialogGPTempty';
 import api from '../api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from '../redux/slices/userSlice';
@@ -17,11 +15,8 @@ import {
   setallChats,
 } from '../redux/slices/chatSlice';
 import ModsPopup from '../components/Popups/ModsPopup';
-import RegistrationErrorPopup from '../components/Popups/RegistrationErrorPopup';
 
 const MainPage = () => {
-  const { language } = useContext(LanguageContext);
-  const dictionary = getDictionary();
   const { chatId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

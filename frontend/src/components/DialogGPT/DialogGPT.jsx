@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { getGptResponse, sendAudioFile } from '../../api/apiOpenAI';
 import DownloadTextFile from '../DownloadTextFile';
 import { useState } from 'react';
@@ -11,12 +11,12 @@ import EmptyDialogMessage from './EmptyDialogMessage';
 import { useOutletContext, useParams } from 'react-router-dom';
 import api from '../../api/api';
 import { setCurrentChat } from '../../redux/slices/chatSlice';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getModsGpt } from '../../utils/workingMods';
 import { LanguageContext } from '../../context/LanguageContext';
 
 const DialogGPT = () => {
+  const { language } = useContext(LanguageContext);
   const { chatId } = useParams();
   const [messages, setMessages] = useState([]);
   const dispatch = useDispatch();
@@ -28,8 +28,8 @@ const DialogGPT = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const messagesEndRef = useRef(null);
   const mods = getModsGpt();
-  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +38,14 @@ const DialogGPT = () => {
       dispatch(setCurrentChat(chat));
     })();
   }, [chatId, dispatch]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   async function startRecording() {
     try {
@@ -49,7 +57,7 @@ const DialogGPT = () => {
       recorder.start();
       setIsRecording(true);
     } catch (err) {
-      console.error('Ошибка доступа к микрофону:', err);
+      alert('Ошибка доступа к микрофону:', err);
     }
   }
 
@@ -91,7 +99,8 @@ const DialogGPT = () => {
 
     try {
       if (messages.length <= 0)
-        promptText = mods.find((item) => item.id === mod).request[language] + promptText;
+        promptText =
+          mods.find((item) => item.id === mod).request[language] + promptText;
       setIsLoading(true);
       const newMessages = [
         {
@@ -122,6 +131,26 @@ const DialogGPT = () => {
     />
   );
 
+  const messageElems =
+    messages.length > 0 ? (
+      messages.map((item, i) => {
+        if (i === 0 && mod !== 1) {
+          const reg = new RegExp(
+            mods.find((item) => item.id === mod).request[language]
+          );
+          let shadowContent = item.content.replace(reg, '');
+          return (
+            <MessageGPT key={i} role={item.role} content={shadowContent} />
+          );
+        }
+        return <MessageGPT key={i} role={item.role} content={item.content} />;
+      })
+    ) : isLoading ? (
+      messageLoading
+    ) : (
+      <EmptyDialogMessage />
+    );
+
   return (
     <div className="flex-grow bg-white py-6 px-8">
       <div className="border-b border-secondary border-opacity-30 flex justify-between px-6 py-4">
@@ -135,31 +164,9 @@ const DialogGPT = () => {
         className={`pt-6 mb-4 h-[calc(100vh-120px-68px)] overflow-y-auto ${scrollStyle}`}
       >
         <div className="h-full">
-          {messages.length > 0 ? (
-            messages.map((item, i) => {
-              if (i === 0 && mod !== 1) {
-                const reg = new RegExp(
-                  mods.find((item) => item.id === mod).request[language]
-                );
-                let shadowContent = item.content.replace(reg, '');
-                return (
-                  <MessageGPT
-                    key={i}
-                    role={item.role}
-                    content={shadowContent}
-                  />
-                );
-              }
-              return (
-                <MessageGPT key={i} role={item.role} content={item.content} />
-              );
-            })
-          ) : isLoading ? (
-            messageLoading
-          ) : (
-            <EmptyDialogMessage />
-          )}
+          {messageElems}
           {messages.length > 0 && isLoading && messageLoading}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 

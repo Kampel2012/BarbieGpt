@@ -1,4 +1,4 @@
-import DialogGPT from '../components/DiablogGPT/DialogGPT';
+import DialogGPT from '../components/DialogGPT/DialogGPT';
 import ProtectedRoute from '../components/ProtectedRouter';
 import MainPage from '../views/MainPage';
 import PromoPage from '../views/PromoPage';
