@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import mic from '../../assets/icon/mic.svg';
 import pen from '../../assets/icon/pen.svg';
 import Notification from './Notification';
 import styles from './NotificationsList.module.css';
@@ -120,9 +119,8 @@ const NotificationsList = () => {
               type="button"
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
-            >
-              <img src={mic} alt="Голосовой ввод"></img>
-            </button>
+              className="h-6 w-6 bg-micIcon active:bg-micActiveIcon"
+            />
             <button type="button" onClick={() => setShowReminderPopup(true)}>
               <img src={pen} alt="Текстовое добавление заметки"></img>
             </button>

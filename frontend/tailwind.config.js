@@ -10,6 +10,8 @@ export default {
         headerlogo: "url('./assets/logo.svg')",
         btnIconUser: "url('./assets/icon/user.svg')",
         messageIcon: "url('./assets/icon/message.svg')",
+        micIcon: 'url(./assets/icon/mic.svg)',
+        micActiveIcon: 'url(./assets/icon/micActive.svg)',
         bgFrame: "url('./assets/borderframe.png')",
       },
       colors: {
