@@ -15,10 +15,10 @@ const DropDownList = ({ show, onLogin, onRegister }) => {
   const handleRegister = () => {
     onRegister();
   };
-
+  /* top-[84px] right-40 */
   return (
     <div
-      className={`fixed top-[84px] right-20 w-72 h-40 flex items-center justify-center z-10 ${
+      className={`absolute top-[84px] right-[72px] left-auto w-72 h-40 flex items-center justify-center z-10 ${
         show ? 'block' : 'hidden'
       } `}
     >

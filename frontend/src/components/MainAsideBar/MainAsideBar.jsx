@@ -39,7 +39,7 @@ const MainAsideBar = ({ chats, createChat }) => {
         </button>
         {chats.length > 0 ? (
           <div
-            className={`my-2 flex flex-col gap-2 h-[570px] overflow-y-auto ${scrollStyle}`}
+            className={`mb-2 mt-5 flex flex-col gap-2 h-[560px] overflow-y-auto ${scrollStyle}`}
           >
             {chats.map((item) => (
               <ProjectBadge key={item._id} name={item.title} id={item._id} />

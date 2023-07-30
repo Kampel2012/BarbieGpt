@@ -44,7 +44,7 @@ const CreateProjectPopup = ({ show, onClose, onSubmit }) => {
               value={reminderTitle}
               onChange={(e) => setReminderTitle(e.target.value)}
               required
-              maxLength={30}
+              maxLength={20}
             />
           </div>
           <button

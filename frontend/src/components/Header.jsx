@@ -9,12 +9,12 @@ const Header = () => {
 
   return (
     <header className="h-20 border-b-2 shadow-sm border-tertiary">
-      <div className="container flex flex-wrap items-center px-20 justify-between h-full ">
+      <div className="container flex flex-wrap items-center px-20 justify-between h-full relative">
         <div
           className="bg-headerlogo w-[165px] h-10 bg-contain bg-no-repeat hover:cursor-pointer"
           onClick={() => navigate('/')}
         />
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap gap-6 ">
           <LanguageSwitcher />
           <button
             type="button"
@@ -22,12 +22,12 @@ const Header = () => {
             onClick={() => setShowDropDownList(!showDropDownList)}
           />
         </div>
+        <DropDownList
+          show={showDropDownList}
+          onLogin={() => navigate('/sign-in')}
+          onRegister={() => navigate('/sign-up')}
+        />
       </div>
-      <DropDownList
-        show={showDropDownList}
-        onLogin={() => navigate('/sign-in')}
-        onRegister={() => navigate('/sign-up')}
-      />
     </header>
   );
 };
