@@ -59,17 +59,15 @@ const MainPage = () => {
   const handleDeleteProjectSubmit = async () => {
     await deleteChat();
     setShowDeleteProjectPopup(false);
+    console.log(chats);
+
+    navigate('/main');
   };
 
   async function deleteChat() {
     try {
       await api.deleteChat({ id: chatId });
       dispatch(removeChatById(chatId));
-      if (chats.length > 1) {
-        navigate(`/main/${chats[0]._id}`);
-      } else {
-        navigate('/main');
-      }
     } catch (error) {
       setshowErrorPopup(true);
     }

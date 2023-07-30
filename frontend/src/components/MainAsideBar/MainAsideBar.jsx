@@ -11,13 +11,14 @@ import { getDictionary } from '../../utils/dictionary';
 import { useSelector } from 'react-redux';
 import styles from './MainAsideBar.module.css';
 
-const MainAsideBar = ({ chats, createChat }) => {
+const MainAsideBar = ({ createChat }) => {
   const { signOut } = useContext(AuthContext);
   const { language } = useContext(LanguageContext);
   const dictionary = getDictionary();
   const scrollStyle = styles.scrollbar;
 
   const { email } = useSelector((state) => state.user.currentUser);
+  const chats = useSelector((state) => state.chat).allChats;
 
   return (
     <div className="p-6 max-w-[280px] bg-bgBlue flex flex-col justify-between min-h-screen">
@@ -65,7 +66,6 @@ const MainAsideBar = ({ chats, createChat }) => {
 };
 
 MainAsideBar.propTypes = {
-  chats: PropTypes.array,
   createChat: PropTypes.func,
 };
 

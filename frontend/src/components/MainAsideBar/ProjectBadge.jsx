@@ -8,7 +8,7 @@ const ProjectBadge = ({ name, id }) => {
   return (
     <Link
       to={`/main/${id}`}
-      className={`w-[213px] min-[] px-3 py-2 rounded-xl flex hover:bg-activeBlue transition-all mr-2 overflow-x-clip ${
+      className={`w-[213px] px-3 py-2 rounded-xl flex hover:bg-activeBlue transition-all mr-2 overflow-x-clip ${
         isActive && 'bg-activeBlue'
       }`}
     >
