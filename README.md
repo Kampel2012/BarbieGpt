@@ -54,7 +54,7 @@ CharryAI также поддерживает функцию уведомлени
 1. Сначала склонируйте проект из репозитория Git на свой компьютер.
 
 ```bash
-git clone (https://github.com/Kampel2012/BarbieGpt.git)
+git clone https://github.com/Kampel2012/BarbieGpt.git
 ```
 
 2. Затем перейдите в каждую из папок `backend` и `frontend` и выполните команду `npm install`, чтобы установить все необходимые зависимости.
