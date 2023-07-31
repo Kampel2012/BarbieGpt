@@ -28,7 +28,7 @@ const NotificationsList = () => {
   }
 
   function handleCreateTextNotification(text, time) {
-    createTextNotification(text, time);
+    createTextNotification(text, time * 60);
     setShowReminderPopup(false);
   }
 
@@ -78,6 +78,7 @@ const NotificationsList = () => {
           });
           const [text, time] = params;
           makeNotification(text, time);
+          console.log(time);
           setNotifications((prev) => [...prev, { text, time: time / 1000 }]);
           setTimeout(() => {
             setNotifications((prev) =>
@@ -110,7 +111,7 @@ const NotificationsList = () => {
   const notificationsElems =
     notifications.length > 0 ? (
       notifications.map((item, i) => (
-        <Notification key={i} text={item.text} time={+item.time * 60} />
+        <Notification key={i} text={item.text} time={+item.time} />
       ))
     ) : (
       <div className="text-center flex flex-col grow justify-center">
@@ -137,8 +138,7 @@ const NotificationsList = () => {
             <button
               type="button"
               onClick={() => setShowReminderPopup(true)}
-              className="hover:opacity-70"
-            >
+              className="hover:opacity-70">
               <img src={pen} alt="Текстовое добавление заметки"></img>
             </button>
           </div>
@@ -147,8 +147,7 @@ const NotificationsList = () => {
           {dictionary.notesSubtitle[language]}
         </p>
         <div
-          className={`flex flex-col gap-4 h-[calc(100vh-32px-32px-32px-40px)] overflow-y-auto ${scrollStyle}`}
-        >
+          className={`flex flex-col gap-4 h-[calc(100vh-32px-32px-32px-40px)] overflow-y-auto ${scrollStyle}`}>
           {notificationsElems}
         </div>
       </div>
